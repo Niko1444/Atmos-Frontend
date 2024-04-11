@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
 import logoBadge from '../assets/logo-badge.png'
-// NavItem
+
 const NavItem = [
 	{
 		name: 'Map',
@@ -27,8 +27,8 @@ const Menu = () => {
 
 	return (
 		<>
-			<div className="relative flex h-screen w-60 flex-col items-center justify-center bg-primary">
-				<div className="absolute left-1/2 top-32 flex h-32 w-40 -translate-x-1/2 -translate-y-1/2 transform items-center justify-center rounded-xl bg-white">
+			<div className="fixed left-0 top-0 flex h-screen w-60 flex-col items-center justify-center bg-primary">
+				<div className="absolute top-12 flex h-32 w-40 transform items-center justify-center rounded-xl bg-white">
 					<img
 						src={logoBadge}
 						alt="Atmos logo badge"
