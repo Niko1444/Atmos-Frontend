@@ -6,7 +6,7 @@ function HelloWorld() {
 
 	return (
 		<>
-			<div className="justify-centerflex flex h-full flex-grow flex-col items-center justify-center">
+			<div className="">
 				<h1 className="text-4xl font-bold">Hello World App!</h1>
 				<p className="py-4 text-lg">
 					<button
