@@ -6,11 +6,8 @@ function HelloWorld() {
 
 	return (
 		<>
-			<div className="justify-centerflex flex h-full w-3/4 flex-grow flex-col items-center justify-center">
+			<div className="justify-centerflex flex h-full flex-grow flex-col items-center justify-center">
 				<h1 className="text-4xl font-bold">Hello World App!</h1>
-				<p className="text-lg text-gray-500">
-					Edit <code>App.jsx</code> and save to test HMR updates.
-				</p>
 				<p className="py-4 text-lg">
 					<button
 						className="rounded-lg bg-slate-50 px-4 py-2 text-green-400 shadow-md"
