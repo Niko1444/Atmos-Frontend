@@ -5,8 +5,15 @@ import TempChart from '../../components/Charts/TempChart'
 function Dashboard() {
 	return (
 		<>
-			<TempChart />
-			{/* <CallApi /> */}
+			<div>
+				<TempChart />
+				<TempChart />
+				<TempChart />
+				<TempChart />
+				<TempChart />
+				<TempChart />
+				{/* <CallApi /> */}
+			</div>
 		</>
 	)
 }
