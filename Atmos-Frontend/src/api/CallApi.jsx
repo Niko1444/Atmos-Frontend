@@ -10,7 +10,7 @@ function CallApi() {
 				// Calculate the start and end times for the past 24 hours
 				const hour = 60 * 60 * 1000
 				const end = new Date().toISOString()
-				const start = new Date(Date.now() - 24 * hour).toISOString()
+				const start = new Date(Date.now() - 2 * 24 * hour).toISOString()
 
 				const data = await fetchSensorDataAPI(start, end)
 				setSensorData(data)

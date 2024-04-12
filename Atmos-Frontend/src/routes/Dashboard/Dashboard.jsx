@@ -1,9 +1,12 @@
+import React from 'react'
 import CallApi from '../../api/CallApi'
+import TempChart from '../../components/Charts/TempChart'
 
 function Dashboard() {
 	return (
 		<>
-			<CallApi />
+			<TempChart />
+			{/* <CallApi /> */}
 		</>
 	)
 }
