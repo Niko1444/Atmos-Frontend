@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Chart from 'chart.js/auto'
+import SelectAlgorithmBtn from '../../routes/Dashboard/SelectAlgorithmBtn'
 import { fetchTemperatureDataAPI } from '../../api/api'
 
 function TempChart() {
@@ -27,6 +28,11 @@ function TempChart() {
 
 		fetchDataAndRenderChart()
 	}, [])
+
+	const handleAlgorithmSelect = (algorithm) => {
+		console.log('Selected algorithm:', algorithm)
+		// Your logic to handle the selected algorithm
+	}
 
 	useEffect(() => {
 		if (chartRef.current && temperatureData.length > 0) {
@@ -112,13 +118,26 @@ function TempChart() {
 	}, [temperatureData])
 
 	return (
-		<div className="z-0 mt-5 rounded-xl border-4 border-accent bg-white px-5 pb-28">
-			<div className=" z-10" style={{ width: '70rem', height: '25rem' }}>
-				<div className=" py-5">
-					<h1 className="h1">Temperature Chart</h1>
-					<p>Historical data of {hours} hours ago</p>
+		<div className="mt-5 rounded-xl border-4 border-accent bg-white px-5">
+			<div>
+				<div className="flex items-center justify-between py-5">
+					<div>
+						<h1 className="h1">Temperature Chart</h1>
+						<p>Historical data of {hours} hours ago</p>
+					</div>
+					<div className="flex">
+						<div>
+							<button className="btn-now">Refresh</button>
+						</div>
+						<SelectAlgorithmBtn onSelectAlgorithm={handleAlgorithmSelect} />
+					</div>
 				</div>
-				<canvas ref={chartRef}></canvas>
+				<div
+					className="flex"
+					style={{ width: '70rem', height: '25rem', marginBottom: '2rem' }}
+				>
+					<canvas ref={chartRef}></canvas>
+				</div>
 			</div>
 		</div>
 	)
