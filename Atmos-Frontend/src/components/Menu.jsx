@@ -28,31 +28,33 @@ const Menu = () => {
 	return (
 		<>
 			<div className="fixed left-0 top-0 flex h-screen w-60 flex-col items-center justify-center bg-primary">
-				<div className="absolute top-12 flex h-32 w-40 transform items-center justify-center rounded-xl bg-white">
+				<div className=" mb-12 mt-12 flex h-32 w-40 transform items-center justify-center rounded-xl bg-white">
 					<img
 						src={logoBadge}
 						alt="Atmos logo badge"
 						style={{ scale: '70%' }}
 					/>
 				</div>
-				{NavItem.map((item, index) => (
-					<Link to={item.link} key={index}>
-						<button
-							className={`btn-primary p-4 ${
-								location.pathname === item.link
-									? 'bg-accent text-white'
-									: 'text-black'
-							} hover:bg-accent hover:text-white`}
-							style={{
-								width: '10rem',
-								height: '4rem',
-								marginBottom: '1rem',
-							}}
-						>
-							{item.name}
-						</button>
-					</Link>
-				))}
+				<div className=" mb-48 flex h-screen w-60 flex-col items-center justify-center bg-primary text-xl font-bold">
+					{NavItem.map((item, index) => (
+						<Link to={item.link} key={index}>
+							<button
+								className={`btn-primary p-4 ${
+									location.pathname === item.link
+										? 'bg-accent text-white'
+										: 'text-black'
+								} hover:bg-accent hover:text-white`}
+								style={{
+									width: '10rem',
+									height: '4rem',
+									marginBottom: '1rem',
+								}}
+							>
+								{item.name}
+							</button>
+						</Link>
+					))}
+				</div>
 			</div>
 		</>
 	)
