@@ -2,15 +2,16 @@ import React, { useEffect, useRef, useState } from 'react'
 import Chart from 'chart.js/auto'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
 import SelectAlgorithmBtn from '../../routes/Dashboard/SelectAlgorithmBtn'
-import { fetchTemperatureDataAPI } from '../../api/api'
+import { fetchPMDataAPI } from '../../api/api'
 
 import { hours, datapointsPerLabel } from './ChartVariable'
+import { generateChartDataLabels } from './ChartVariable'
 
 Chart.register(ChartDataLabels)
 
-function TempChart() {
+function PMChart() {
 	const chartRef = useRef(null)
-	const [temperatureData, setTemperatureData] = useState([])
+	const [pmData, setPMData] = useState([])
 
 	useEffect(() => {
 		fetchDataAndRenderChart()
@@ -21,32 +22,28 @@ function TempChart() {
 			const hour = 60 * 60 * 1000
 			const end = new Date().toISOString()
 			const start = new Date(Date.now() - hours * hour).toISOString()
-
-			const data = await fetchTemperatureDataAPI(start, end)
-			const filteredData = data.filter((feed) => parseFloat(feed.field1) !== 0)
-			setTemperatureData(filteredData)
+			const data = await fetchPMDataAPI(start, end)
+			const filteredData = data.filter((feed) => parseFloat(feed.field6) !== 0)
+			setPMData(filteredData)
 		} catch (error) {
-			console.error('Error fetching temperature data:', error)
+			console.error('Error fetching PM data:', error)
 		}
 	}
 
 	const handleAlgorithmSelect = (algorithm) => {
 		console.log('Selected algorithm:', algorithm)
-		// Your logic to handle the selected algorithm
 	}
 
 	useEffect(() => {
-		if (chartRef.current && temperatureData.length > 0) {
+		if (chartRef.current && pmData.length > 0) {
 			const ctx = chartRef.current.getContext('2d')
-			const temperatures = temperatureData.map((feed) =>
-				parseFloat(feed.field1),
-			)
-			const labels = temperatureData.map((feed, index) => {
+			const pms = pmData.map((feed) => parseFloat(feed.field6))
+			const labels = pmData.map((feed, index) => {
 				if (index % datapointsPerLabel === 0) {
 					const date = new Date(feed.created_at)
 					return date.toLocaleTimeString('en-US', { hour12: true })
 				} else {
-					return '' // Skip adding label but keep data point
+					return ''
 				}
 			})
 
@@ -56,8 +53,8 @@ function TempChart() {
 					labels: labels,
 					datasets: [
 						{
-							label: 'Temperature',
-							data: temperatures,
+							label: 'PM2.5',
+							data: pms,
 							fill: false,
 							borderColor: 'orange',
 							tension: 0.1,
@@ -81,7 +78,7 @@ function TempChart() {
 						y: {
 							title: {
 								display: true,
-								text: 'Temperature (°C)',
+								text: 'PM 2.5',
 							},
 						},
 					},
@@ -96,11 +93,11 @@ function TempChart() {
 									}
 
 									if (context.parsed.y !== null) {
-										label += context.parsed.y + '°C'
+										label += context.parsed.y + 'PM2.5'
 									}
 
-									if (context.dataIndex < temperatureData.length) {
-										const feed = temperatureData[context.dataIndex]
+									if (context.dataIndex < pmData.length) {
+										const feed = pmData[context.dataIndex]
 										const date = new Date(feed.created_at)
 
 										label =
@@ -113,28 +110,7 @@ function TempChart() {
 								},
 							},
 						},
-						datalabels: {
-							display: function (context) {
-								if (
-									context.dataIndex === 0 ||
-									context.dataset.data[context.dataIndex] !==
-										context.dataset.data[context.dataIndex - 1]
-								) {
-									return true
-								}
-								return false
-							},
-							anchor: 'end',
-							align: 'center',
-							color: 'black',
-							labels: {
-								title: {
-									font: {
-										weight: 'bold',
-									},
-								},
-							},
-						},
+						datalabels: generateChartDataLabels(true, 2),
 					},
 				},
 			})
@@ -143,7 +119,7 @@ function TempChart() {
 				myChart.destroy()
 			}
 		}
-	}, [temperatureData])
+	}, [pmData])
 
 	const handleRefresh = () => {
 		fetchDataAndRenderChart()
@@ -154,7 +130,7 @@ function TempChart() {
 			<div>
 				<div className="flex items-center justify-between py-5">
 					<div>
-						<h1 className="h1">Temperature Chart</h1>
+						<h1 className="h1">PM2.5 Chart</h1>
 						<p>Historical data of {hours} hours ago</p>
 					</div>
 					<div className="flex">
@@ -177,4 +153,4 @@ function TempChart() {
 	)
 }
 
-export default TempChart
+export default PMChart

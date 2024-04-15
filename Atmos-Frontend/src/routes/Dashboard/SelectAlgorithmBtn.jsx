@@ -45,7 +45,9 @@ function SelectAlgorithmBtn({ onSelectAlgorithm }) {
 					</li>
 					{selectedAlgorithm && ( // Show the "Unselect" option only if an algorithm is selected
 						<li>
-							<button onClick={handleUnselectAlgorithm}>Unselect</button>
+							<button onClick={handleUnselectAlgorithm} className=" font-thin">
+								Unselect
+							</button>
 						</li>
 					)}
 				</ul>
