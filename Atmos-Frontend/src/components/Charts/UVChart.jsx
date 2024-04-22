@@ -111,7 +111,7 @@ function UVChart() {
 								},
 							},
 						},
-						datalabels: generateChartDataLabels(true, 2),
+						datalabels: generateChartDataLabels(true, 0, 1),
 					},
 				},
 			})
