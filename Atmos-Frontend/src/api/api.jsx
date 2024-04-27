@@ -11,10 +11,11 @@ const CHANNEL_ID = 2465663
 // 	`https://api.thingspeak.com/channels/${CHANNEL_ID}/feeds.json?api_key=${API_KEY}`,
 // ]
 
+const url = `https://api.thingspeak.com/channels/2465663/feeds.json?api_key=MP0MEWPWMADVCPMG`
+
 //------------All data----------------
 export const fetchSensorDataAPI = async (start, end) => {
 	try {
-		// Construct the URL with start and end time parameters
 		const url = `https://api.thingspeak.com/channels/${CHANNEL_ID}/feeds.json?api_key=${API_KEY}&start=${start}&end=${end}`
 		const response = await axios.get(url)
 		if (response.data && response.data.feeds) {
@@ -24,7 +25,7 @@ export const fetchSensorDataAPI = async (start, end) => {
 		}
 	} catch (error) {
 		console.error('Error fetching data:', error)
-		throw error // Rethrow the error to handle it in the component
+		throw error
 	}
 }
 

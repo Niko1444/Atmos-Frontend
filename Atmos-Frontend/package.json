@@ -10,6 +10,8 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
+		"@fontsource-variable/rubik": "^5.0.22",
+		"@fontsource/titillium-web": "^5.0.20",
 		"@reduxjs/toolkit": "^2.2.1",
 		"@tailwindcss/typography": "^0.5.12",
 		"axios": "^1.6.7",

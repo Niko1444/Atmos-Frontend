@@ -166,6 +166,16 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.57.0.tgz#a5417ae8427873f1dd08b70b3574b453e67b5f7f"
   integrity sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==
 
+"@fontsource-variable/rubik@^5.0.22":
+  version "5.0.22"
+  resolved "https://registry.yarnpkg.com/@fontsource-variable/rubik/-/rubik-5.0.22.tgz#6d6ac368453086279be98ad19ad90f6ee33f7268"
+  integrity sha512-QwMlj57+k5+IsShA8q6FECU6zlR4CIm4TAy49GIIiMxxpmRwDXbMynrTp2kBNZmlN4b/myXzSRBnI2DXmnWBJA==
+
+"@fontsource/titillium-web@^5.0.20":
+  version "5.0.20"
+  resolved "https://registry.yarnpkg.com/@fontsource/titillium-web/-/titillium-web-5.0.20.tgz#e82721529597376d0a614bc5541559bb711f3d73"
+  integrity sha512-j1Yy1A4nN/4tQmyiR/vvKWEWr0X8gsM49Fu0WbhGP8eshusR7vT0TK0V19BNNq7ObBDzO1JPtCYz3UszdjfsvQ==
+
 "@humanwhocodes/config-array@^0.11.14":
   version "0.11.14"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.11.14.tgz#d78e481a039f7566ecc9660b4ea7fe6b1fec442b"

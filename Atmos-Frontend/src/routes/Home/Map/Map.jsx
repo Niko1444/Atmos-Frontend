@@ -9,12 +9,11 @@ import {
 	LayersControl,
 	LayerGroup,
 	Circle,
-	Tooltip,
 } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import L from 'leaflet'
-import CustomMarker from '../../assets/custom-marker.png'
-import CustomUser from '../../assets/icon-user.png'
+import CustomMarker from '../../../assets/custom-marker.png'
+import CustomUser from '../../../assets/icon-user.png'
 
 import './Map.css'
 
@@ -253,7 +252,7 @@ function Map() {
 							opacity: 1,
 							fillOpacity: 0.4,
 						}}
-						radius={1000}
+						radius={600}
 					></Circle>
 				}
 				<Marker position={marker.position} icon={customIconMarker}></Marker>
@@ -272,8 +271,8 @@ function Map() {
 	}
 
 	return (
-		<div className="content-map">
-			<MapContainer center={firtsPosition} zoom={13} scrollWheelZoom={true}>
+		<div className="content-map relative">
+			<MapContainer center={firtsPosition} zoom={15} scrollWheelZoom={true}>
 				<TileLayer
 					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 					url="https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png"

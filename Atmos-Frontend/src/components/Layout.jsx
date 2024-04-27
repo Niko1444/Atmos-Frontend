@@ -4,7 +4,7 @@ function Layout({ children }) {
 	return (
 		<div className="flex flex-row">
 			<Menu />
-			<div className="flex flex-1 flex-col ml-60">
+			<div className="ml-60 flex flex-1 flex-col">
 				<div className="flex items-center justify-center">{children}</div>
 			</div>
 		</div>
