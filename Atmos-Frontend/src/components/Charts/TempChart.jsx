@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import Chart from 'chart.js/auto'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
 import SelectAlgorithmBtn from '../../routes/Dashboard/SelectAlgorithmBtn'
+import { generateChartDataLabels } from './ChartVariable'
 import { fetchTemperatureDataAPI } from '../../api/api'
-
 import { hours, datapointsPerLabel } from './ChartVariable'
 
 Chart.register(ChartDataLabels)
@@ -46,7 +46,7 @@ function TempChart() {
 					const date = new Date(feed.created_at)
 					return date.toLocaleTimeString('en-US', { hour12: true })
 				} else {
-					return '' // Skip adding label but keep data point
+					return ''
 				}
 			})
 
@@ -113,28 +113,7 @@ function TempChart() {
 								},
 							},
 						},
-						datalabels: {
-							display: function (context) {
-								if (
-									context.dataIndex === 0 ||
-									context.dataset.data[context.dataIndex] !==
-										context.dataset.data[context.dataIndex - 1]
-								) {
-									return true
-								}
-								return false
-							},
-							anchor: 'end',
-							align: 'center',
-							color: 'black',
-							labels: {
-								title: {
-									font: {
-										weight: 'bold',
-									},
-								},
-							},
-						},
+						datalabels: generateChartDataLabels(true, 1, 0.1),
 					},
 				},
 			})

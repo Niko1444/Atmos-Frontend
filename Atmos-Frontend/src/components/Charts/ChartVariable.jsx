@@ -1,4 +1,4 @@
-export const hours = 72
+export const hours = 4
 export const datapointsPerLabel = 3
 
 /**
@@ -13,7 +13,7 @@ export const datapointsPerLabel = 3
 export function generateChartDataLabels(
 	showLabelsOnChange = false,
 	decimalPlaces = 2,
-	range = 0.001, // Now a parameter to the function
+	range = 0.001,
 ) {
 	const DataLabels = {
 		display: function (context) {

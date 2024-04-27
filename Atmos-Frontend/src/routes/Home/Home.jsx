@@ -1,7 +1,7 @@
-import HelloWorld from './HelloWorld'
+import Map from './Map'
 
 function Home() {
-	return <HelloWorld />
+	return <Map />
 }
 
 export default Home
