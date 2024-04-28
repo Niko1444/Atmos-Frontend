@@ -6,6 +6,16 @@ export default {
 	content: ['./src/**/*.{js,jsx,ts,tsx}'],
 	theme: {
 		extend: {},
+		fontFamily: {
+			primary: 'Titillium Web, sans-serif',
+		},
+		fontWeight: {
+			light: 300,
+			normal: 400,
+			medium: 600,
+			bold: 700,
+			extraBold: 900,
+		},
 	},
 	plugins: [daisyui],
 	daisyui: {

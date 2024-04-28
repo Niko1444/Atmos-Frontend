@@ -43,7 +43,7 @@ function SelectAlgorithmBtn({ onSelectAlgorithm }) {
 							Prophet + LSTM
 						</button>
 					</li>
-					{selectedAlgorithm && ( // Show the "Unselect" option only if an algorithm is selected
+					{selectedAlgorithm && (
 						<li>
 							<button onClick={handleUnselectAlgorithm} className=" font-thin">
 								Unselect

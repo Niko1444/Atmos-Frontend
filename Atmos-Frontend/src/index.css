@@ -1,6 +1,19 @@
+@import '@fontsource/titillium-web/200.css';
+@import '@fontsource/titillium-web/300.css';
+@import '@fontsource/titillium-web/400.css';
+@import '@fontsource/titillium-web/600.css';
+@import '@fontsource/titillium-web/700.css';
+@import '@fontsource/titillium-web/900.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+	html {
+		font-family: 'Titillium Web', sans-serif;
+	}
+}
 
 @layer components {
 	.btn-primary {
@@ -8,7 +21,7 @@
 	}
 
 	.btn-now {
-		@apply rounded-xl bg-accent px-3 py-3 font-semibold text-white transition duration-300 ease-in-out;
+		@apply rounded-xl bg-accent px-3 py-3 font-medium text-white transition duration-300 ease-in-out;
 	}
 
 	.h1 {

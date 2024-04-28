@@ -1,7 +1,13 @@
-import HelloWorld from './HelloWorld'
+import Map from './Map/Map'
+import Overlay from './Overlays/Overlay'
 
 function Home() {
-	return <HelloWorld />
+	return (
+		<>
+			<Map />
+			<Overlay />
+		</>
+	)
 }
 
 export default Home

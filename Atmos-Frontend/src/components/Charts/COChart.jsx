@@ -59,7 +59,7 @@ function COChart() {
 							label: 'CO Levels',
 							data: coLevels,
 							fill: false,
-							borderColor: 'orange', // Custom color
+							borderColor: 'orange',
 							tension: 0.1,
 						},
 					],
@@ -113,7 +113,7 @@ function COChart() {
 								},
 							},
 						},
-						datalabels: generateChartDataLabels(true, 1),
+						datalabels: generateChartDataLabels(true, 2, 1),
 					},
 				},
 			})

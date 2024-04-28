@@ -24,7 +24,9 @@ function UVChart() {
 			const start = new Date(Date.now() - hours * hour).toISOString()
 
 			const data = await fetchUVDataAPI(start, end)
-			const filteredData = data.filter((feed) => parseFloat(feed.field5) !== 0)
+			const filteredData = data.filter(
+				(feed) => Math.round(parseFloat(feed.field5)) !== 0,
+			)
 			setUVData(filteredData)
 		} catch (error) {
 			console.error('Error fetching UV data:', error)
@@ -111,7 +113,7 @@ function UVChart() {
 								},
 							},
 						},
-						datalabels: generateChartDataLabels(true, 2),
+						datalabels: generateChartDataLabels(true, 2, 0.2),
 					},
 				},
 			})
