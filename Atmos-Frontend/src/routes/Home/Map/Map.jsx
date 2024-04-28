@@ -94,7 +94,7 @@ function Map() {
 			<MapContainer center={firtsPosition} zoom={15} scrollWheelZoom={true}>
 				<TileLayer
 					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-					url="https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png"
+					url="https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png?api_key=240d8d32-bc04-4def-be5a-5a230811e9de"
 				/>
 				<LocationMarker />
 				<LayersControl position="topright">
