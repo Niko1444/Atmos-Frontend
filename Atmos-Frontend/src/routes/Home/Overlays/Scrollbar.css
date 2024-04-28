@@ -1,0 +1,20 @@
+/* Style the scrollbar itself (optional: width, background) */
+.modal-scrollbar::-webkit-scrollbar {
+	width: 8px; /* Adjust width of the scrollbar */
+}
+
+/* Style the track (part the thumb slides within) */
+.modal-scrollbar::-webkit-scrollbar-track {
+	background: #afd3e2; /* Color of the track */
+}
+
+/* Style the thumb (the draggable part) */
+.modal-scrollbar::-webkit-scrollbar-thumb {
+	background-color: #19a7ce; /* Color of the thumb */
+	border-radius: 4px; /* Roundness of the thumb */
+}
+
+/* Optionally, style the thumb on hover */
+.modal-scrollbar::-webkit-scrollbar-thumb:hover {
+	background: #555;
+}

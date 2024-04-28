@@ -1,0 +1,30 @@
+/* Backdrop styles with transition */
+.backdrop {
+	background-color: rgba(0, 0, 0, 0.5);
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	opacity: 0;
+	visibility: hidden;
+	z-index: 10;
+	transition:
+		opacity 0.3s ease,
+		visibility 0.3s ease;
+}
+
+.backdrop.show {
+	opacity: 1;
+	visibility: visible;
+}
+
+/* TableOverlay with transition */
+.table-overlay {
+	transition: transform 0.3s ease-out;
+	transform: translateX(100%);
+}
+
+.table-overlay.show {
+	transform: translateX(0);
+}

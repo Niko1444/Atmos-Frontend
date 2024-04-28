@@ -110,7 +110,7 @@ function PMChart() {
 								},
 							},
 						},
-						datalabels: generateChartDataLabels(true, 4),
+						datalabels: generateChartDataLabels(true, 4, 0.001),
 					},
 				},
 			})

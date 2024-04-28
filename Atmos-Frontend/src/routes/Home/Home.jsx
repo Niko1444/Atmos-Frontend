@@ -1,5 +1,5 @@
 import Map from './Map/Map'
-import Overlay from './Overlay'
+import Overlay from './Overlays/Overlay'
 
 function Home() {
 	return (

@@ -111,7 +111,7 @@ function CO2Chart() {
 								},
 							},
 						},
-						datalabels: generateChartDataLabels(true, 4, 0.01),
+						datalabels: generateChartDataLabels(true, 4, 0.001),
 					},
 				},
 			})
