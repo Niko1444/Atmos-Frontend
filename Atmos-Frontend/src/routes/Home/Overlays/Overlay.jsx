@@ -257,7 +257,7 @@ function Overlay() {
 			{/* Table Overlay */}
 			{showTableOverlay && (
 				<div
-					className="absolute right-[-2.4rem] top-0 z-10 flex w-[55rem] flex-col overflow-hidden rounded-bl-[3rem] rounded-tl-[3rem] bg-primary shadow-xl"
+					className="absolute right-[-2.4rem] top-0 z-10 flex w-[70rem] flex-col overflow-hidden rounded-bl-[3rem] rounded-tl-[3rem] bg-primary shadow-xl"
 					style={{ height: '90vh' }}
 				>
 					<div
