@@ -3,10 +3,10 @@ import Overlay from './Overlays/Overlay'
 
 function Home() {
 	return (
-		<>
+		<div className="">
 			<Map />
 			<Overlay />
-		</>
+		</div>
 	)
 }
 

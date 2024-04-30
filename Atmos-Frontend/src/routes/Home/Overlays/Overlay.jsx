@@ -1,9 +1,55 @@
 import React, { useState, useEffect } from 'react'
 import { fetchSensorDataAPI } from '../../../api/api'
 import MeasuresModal from '../Navbar/MeasuresModal'
+import { Transition } from '@headlessui/react'
+
 import './Scrollbar.css'
 import './Overlay.css'
-const tips = 'Have fun and enjoy the fresh air!'
+
+const fetchFromHour = 48
+
+const tips = {
+	temperature: {
+		tooHigh:
+			'Stay hydrated. Seek shade or air-conditioned spaces. Wear loose-fitting, light-colored clothing.',
+		tooLow:
+			'Dress in layers. Avoid prolonged exposure to the cold. Stay indoors if possible.',
+		optimal:
+			'Enjoy the comfortable temperatures! Remember to stay hydrated and wear sunscreen.',
+	},
+	humidity: {
+		tooHigh:
+			'Use a dehumidifier. Stay hydrated. Avoid strenuous outdoor activities.',
+		tooLow: 'Use a humidifier. Moisturize your skin. Stay hydrated.',
+		optimal: 'Comfortable humidity levels! Take advantage of the nice weather.',
+	},
+	uvIndex: {
+		low: 'Enjoy the outdoors! Remember to wear sunscreen for extended periods outside.',
+		moderate:
+			'Seek shade during midday hours. Wear protective clothing and sunglasses.',
+		high: 'Limit outdoor exposure between 10am-4pm.  Wear protective clothing, sunscreen, and a hat.',
+		veryHigh:
+			'Stay indoors if possible. If outdoors, take strict precautions with sunscreen, clothing, and shade.',
+	},
+	co2: {
+		low: 'Air quality is excellent! Enjoy the fresh air.',
+		moderate: 'Air quality is acceptable. Enjoy outdoor activities.',
+		high: 'Air quality is poor. Limit outdoor exposure if possible.',
+		veryHigh: 'Air quality is very poor. Avoid outdoor activities.',
+	},
+	co: {
+		low: 'Air quality is excellent! Enjoy the fresh air.',
+		moderate: 'Air quality is acceptable. Enjoy outdoor activities.',
+		high: 'Air quality is poor. Limit outdoor exposure if possible.',
+		veryHigh: 'Air quality is very poor. Avoid outdoor activities.',
+	},
+	pm25: {
+		low: 'Air quality is excellent! Enjoy the fresh air.',
+		moderate: 'Air quality is acceptable. Enjoy outdoor activities.',
+		high: 'Air quality is poor. Limit outdoor exposure if possible.',
+		veryHigh: 'Air quality is very poor. Avoid outdoor activities.',
+	},
+}
 
 const colorRanges = {
 	temperature: [
@@ -81,23 +127,105 @@ function Overlay() {
 
 	const [showTableOverlay, setShowTableOverlay] = useState(false)
 
-	const [isMeasuresOpen, setIsMeasuresOpen] = useState(false)
+	const [currentTipIndex, setCurrentTipIndex] = useState(0)
 
-	const openMeasures = () => setIsMeasuresOpen(true)
-	const closeMeasures = () => setIsMeasuresOpen(false)
+	const tipsArray = [
+		tips.temperature,
+		tips.humidity,
+		tips.uvIndex,
+		tips.co2,
+		tips.co,
+		tips.pm25,
+	]
+
+	// Inside your Overlay component
+	const determineTip = () => {
+		const tempValue = parseFloat(sensorData.field1)
+		const humidityValue = parseFloat(sensorData.field2)
+		const uvIndexValue = parseFloat(sensorData.field5)
+		const co2Value = parseFloat(sensorData.field3)
+		const coValue = parseFloat(sensorData.field4)
+		const pm25Value = parseFloat(sensorData.field6)
+
+		let tipMessage = []
+
+		// Temperature Logic
+		if (tempValue > 32) {
+			tipMessage.push(tips.temperature.tooHigh)
+		} else if (tempValue < 15) {
+			tipMessage.push(tips.temperature.tooLow)
+		} else {
+			tipMessage.push(tips.temperature.optimal)
+		}
+
+		// Humidity Logic
+		if (humidityValue > 70) {
+			tipMessage.push(tips.humidity.tooHigh)
+		} else if (humidityValue < 30) {
+			tipMessage.push(tips.humidity.tooLow)
+		} else {
+			tipMessage.push(tips.humidity.optimal)
+		}
+
+		// UV Index Logic
+		if (uvIndexValue >= 7) {
+			tipMessage.push(tips.uvIndex.veryHigh)
+		} else if (uvIndexValue >= 5) {
+			tipMessage.push(tips.uvIndex.high)
+		} else if (uvIndexValue >= 2) {
+			tipMessage.push(tips.uvIndex.moderate)
+		} else {
+			tipMessage.push(tips.uvIndex.low)
+		}
+
+		// CO2 Logic
+		if (co2Value >= 2000) {
+			tipMessage.push(tips.co2.veryHigh)
+		} else if (co2Value >= 1000) {
+			tipMessage.push(tips.co2.high)
+		} else if (co2Value >= 400) {
+			tipMessage.push(tips.co2.moderate)
+		} else {
+			tipMessage.push(tips.co2.low)
+		}
+
+		// CO Logic
+		if (coValue >= 200) {
+			tipMessage.push(tips.co.veryHigh)
+		} else if (coValue >= 100) {
+			tipMessage.push(tips.co.high)
+		} else if (coValue >= 50) {
+			tipMessage.push(tips.co.moderate)
+		} else {
+			tipMessage.push(tips.co.low)
+		}
+
+		// PM2.5 Logic
+		if (pm25Value >= 75) {
+			tipMessage.push(tips.pm25.veryHigh)
+		} else if (pm25Value >= 50) {
+			tipMessage.push(tips.pm25.high)
+		} else if (pm25Value >= 20) {
+			tipMessage.push(tips.pm25.moderate)
+		} else {
+			tipMessage.push(tips.pm25.low)
+		}
+
+		return tipMessage
+	}
 
 	useEffect(() => {
 		const fetchLatestSensorData = async () => {
 			const hour = 60 * 60 * 1000
 			const end = new Date().toISOString()
-			const start = new Date(Date.now() - 24 * hour).toISOString()
+			const start = new Date(Date.now() - fetchFromHour * hour).toISOString()
 
 			try {
 				const feeds = await fetchSensorDataAPI(start, end)
 				if (feeds.length > 0) {
-					const latestData = feeds[feeds.length - 1] // Get the latest entry
+					const latestData = feeds[feeds.length - 1]
 					setSensorData({
-						field1: parseFloat(latestData.field1).toFixed(1), // Format to 2 decimal places
+						field1: parseFloat(latestData.field1).toFixed(1),
 						field2: parseFloat(latestData.field2).toFixed(0),
 						field3: parseFloat(latestData.field3).toFixed(4),
 						field4: parseFloat(latestData.field4).toFixed(4),
@@ -121,8 +249,16 @@ function Overlay() {
 			}
 		}
 
+		const tipInterval = setInterval(() => {
+			setCurrentTipIndex((prevIndex) => (prevIndex + 1) % tipsArray.length)
+		}, 5000)
+
 		fetchLatestSensorData()
-	}, [])
+
+		return () => {
+			clearInterval(tipInterval)
+		}
+	}, [tipsArray.length])
 
 	const realtime = sensorData.lastUpdate
 
@@ -150,10 +286,10 @@ function Overlay() {
 			>
 				{/* Top Overlay */}
 				<div className="flex h-32 w-full flex-col items-center justify-center rounded-[3rem] bg-accent align-middle">
-					<h1 className="mx-10 text-center font-sans text-2xl font-medium text-primary">
+					<h1 className="font-sans mx-10 text-center text-2xl font-medium text-primary">
 						Your position and surroundings:
 					</h1>
-					<h2 className="mx-10 my-1 text-center font-sans text-2xl font-light text-primary">
+					<h2 className="font-sans mx-10 my-1 text-center text-2xl font-light text-primary">
 						Thu Duc City
 					</h2>
 				</div>
@@ -173,8 +309,25 @@ function Overlay() {
 							{/* Current Date and Time */}
 							<p className="pb-4 text-sm">{realtime} (last update)</p>
 						</div>
-						<div>
-							<p className="text-md font-medium text-accent">Tips: {tips}</p>
+						<div className="mx-4 h-28">
+							<Transition
+								show={true}
+								enter="transition-opacity duration-500"
+								enterFrom="opacity-0"
+								enterTo="opacity-100"
+								leave="transition-opacity duration-500"
+								leaveFrom="opacity-100"
+								leaveTo="opacity-0"
+							>
+								{(ref) => (
+									<p
+										ref={ref}
+										className="text-center text-lg font-medium text-accent"
+									>
+										Tips: <br /> {determineTip()[currentTipIndex]}
+									</p>
+								)}
+							</Transition>
 						</div>
 					</div>
 					{/* Grid Layout of 6 Air Quality Indexes */}
