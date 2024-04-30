@@ -12,10 +12,10 @@ const NavItem = [
 		name: 'Dashboard',
 		link: '/dashboard',
 	},
-	{
-		name: 'Setting',
-		link: '/setting',
-	},
+	// {
+	// 	name: 'Setting',
+	// 	link: '/setting',
+	// },
 	{
 		name: 'About Us',
 		link: '/about',
@@ -54,6 +54,11 @@ const Menu = () => {
 							</button>
 						</Link>
 					))}
+				</div>
+				<div className="absolute bottom-4">
+					<p className="text-center text-sm text-gray-600">
+						©Atmos 2024. All rights reserved.
+					</p>
 				</div>
 			</div>
 		</>

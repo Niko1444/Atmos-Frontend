@@ -12,6 +12,10 @@
 	"dependencies": {
 		"@fontsource-variable/rubik": "^5.0.22",
 		"@fontsource/titillium-web": "^5.0.20",
+		"@fortawesome/fontawesome-svg-core": "^6.5.2",
+		"@fortawesome/free-brands-svg-icons": "^6.5.2",
+		"@fortawesome/react-fontawesome": "^0.2.0",
+		"@headlessui/react": "^1.7.19",
 		"@reduxjs/toolkit": "^2.2.1",
 		"@tailwindcss/typography": "^0.5.12",
 		"axios": "^1.6.7",

@@ -13,8 +13,6 @@ import About from './routes/About/About'
 import NotFound from './routes/NotFound'
 
 function App() {
-	const [count, setCount] = useState(0)
-
 	return (
 		<Layout>
 			<Routes>
@@ -25,7 +23,7 @@ function App() {
 				<Route path="/dashboard" element={<Dashboard />} />
 
 				{/* Setting */}
-				<Route path="/setting" element={<Setting />} />
+				{/* <Route path="/setting" element={<Setting />} /> */}
 
 				{/* About */}
 				<Route path="/about" element={<About />} />
