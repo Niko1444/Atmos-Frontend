@@ -6,7 +6,7 @@ import { Transition } from '@headlessui/react'
 import './Scrollbar.css'
 import './Overlay.css'
 
-const fetchFromHour = 48
+const fetchFromHour = 720
 
 const tips = {
 	temperature: {
@@ -287,7 +287,7 @@ function Overlay() {
 				{/* Top Overlay */}
 				<div className="flex h-32 w-full flex-col items-center justify-center rounded-[3rem] bg-accent align-middle">
 					<h1 className="font-sans mx-10 text-center text-2xl font-medium text-primary">
-						Your position and surroundings:
+						Nearest Station From Your Location:
 					</h1>
 					<h2 className="font-sans mx-10 my-1 text-center text-2xl font-light text-primary">
 						Thu Duc City
