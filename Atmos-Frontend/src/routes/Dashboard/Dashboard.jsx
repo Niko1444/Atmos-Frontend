@@ -1,5 +1,4 @@
 import React from 'react'
-import CallApi from '../../api/CallApi'
 import TempChart from '../../components/Charts/TempChart'
 import HumidityChart from '../../components/Charts/HumidityChart'
 import CO2Chart from '../../components/Charts/CO2Chart'
@@ -17,7 +16,6 @@ function Dashboard() {
 				<COChart />
 				<UVChart />
 				<PMChart />
-				{/* <CallApi /> */}
 			</div>
 		</>
 	)
