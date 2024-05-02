@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { fetchSensorDataAPI } from '../../../api/api'
+import { getAQIAPI } from '../../../api/callAPIModels'
 import MeasuresModal from '../Navbar/MeasuresModal'
 import { Transition } from '@headlessui/react'
 
@@ -125,6 +126,10 @@ function Overlay() {
 		lastUpdate: '',
 	})
 
+	const [currentAQI, setCurrentAQI] = useState('Loading...')
+
+	const pRef = useRef(null)
+
 	const [showTableOverlay, setShowTableOverlay] = useState(false)
 
 	const [currentTipIndex, setCurrentTipIndex] = useState(0)
@@ -249,10 +254,21 @@ function Overlay() {
 			}
 		}
 
+		const fetchAQI = async () => {
+			try {
+				const response = await getAQIAPI()
+				setCurrentAQI(response.aqi_score)
+			} catch (error) {
+				console.error('Failed to fetch AQI:', error)
+				setCurrentAQI('Error')
+			}
+		}
+
 		const tipInterval = setInterval(() => {
 			setCurrentTipIndex((prevIndex) => (prevIndex + 1) % tipsArray.length)
 		}, 5000)
 
+		fetchAQI()
 		fetchLatestSensorData()
 
 		return () => {
@@ -302,7 +318,9 @@ function Overlay() {
 							<p className="text-primary">LIVE</p>
 						</div>
 						<div className="flex flex-col items-center justify-center">
-							<p className="mb-[-1rem] mt-[-2rem] py-0 text-[6rem]">8</p>
+							<p className="mb-[-1rem] mt-[-2rem] py-0 text-[6rem]">
+								{currentAQI}
+							</p>
 							<p className="my-0 py-0 text-xl font-light text-green-500">
 								Fair
 							</p>
@@ -319,14 +337,12 @@ function Overlay() {
 								leaveFrom="opacity-100"
 								leaveTo="opacity-0"
 							>
-								{(ref) => (
-									<p
-										ref={ref}
-										className="text-center text-lg font-medium text-accent"
-									>
-										Tips: <br /> {determineTip()[currentTipIndex]}
-									</p>
-								)}
+								<p
+									ref={pRef}
+									className="text-center text-lg font-medium text-accent"
+								>
+									Tips: <br /> {determineTip()[currentTipIndex]}
+								</p>
 							</Transition>
 						</div>
 					</div>
