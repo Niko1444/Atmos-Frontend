@@ -1,17 +1,29 @@
+// Import necessary libraries
 import React, { useEffect, useRef, useState } from 'react'
 import Chart from 'chart.js/auto'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
-import SelectAlgorithmBtn from '../../routes/Dashboard/SelectAlgorithmBtn'
-import { fetchUVDataAPI } from '../../api/api'
 
+// Import Components
+import SelectAlgorithmBtn from '../../routes/Dashboard/SelectAlgorithmBtn'
+
+// Import Chart Variables
 import { hours, datapointsPerLabel } from './ChartVariable'
 import { generateChartDataLabels } from './ChartVariable'
+
+// Import API
+import { fetchUVDataAPI } from '../../api/api'
+import { getUVProphetAPI } from '../../api/callAPIModels'
+import { getUVGBAPI } from '../../api/callAPIModels'
+import { getUVXGBAPI } from '../../api/callAPIModels'
+import { getUVRFAPI } from '../../api/callAPIModels'
 
 Chart.register(ChartDataLabels)
 
 function UVChart() {
 	const chartRef = useRef(null)
+	const [selectedModel, setSelectedModel] = useState(null)
 	const [uvData, setUVData] = useState([])
+	const [loading, setLoading] = useState(true)
 
 	useEffect(() => {
 		fetchDataAndRenderChart()
@@ -28,19 +40,57 @@ function UVChart() {
 				(feed) => Math.round(parseFloat(feed.field5)) !== 0,
 			)
 			setUVData(filteredData)
+			setLoading(false)
 		} catch (error) {
 			console.error('Error fetching UV data:', error)
+			setLoading(false)
 		}
 	}
 
-	const handleAlgorithmSelect = (algorithm) => {
-		console.log('Selected algorithm:', algorithm)
+	const handleAlgorithmSelect = async (algorithm) => {
+		setSelectedModel(algorithm)
+		try {
+			let data
+			setLoading(true)
+			switch (algorithm) {
+				case 'Prophet':
+					data = await getUVProphetAPI()
+					break
+				case 'GB':
+					data = await getUVGBAPI()
+					break
+				case 'XGB':
+					data = await getUVXGBAPI()
+					break
+				case 'RF':
+					data = await getUVRFAPI()
+					break
+				default:
+					data = await fetchDataAndRenderChart()
+			}
+
+			const forecast_dates = data.forecast_dates
+			const forecast_values = data.forecast_values
+			const forecastData = forecast_dates.map((date, index) => {
+				return {
+					field5: forecast_values[index],
+					created_at: date,
+				}
+			})
+
+			setUVData(forecastData)
+			setLoading(false)
+		} catch (error) {
+			console.error('Error fetching UV data:', error)
+			setLoading(false)
+		}
 	}
 
 	useEffect(() => {
 		if (chartRef.current && uvData.length > 0) {
 			const ctx = chartRef.current.getContext('2d')
 			const uvs = uvData.map((feed) => parseFloat(feed.field5))
+
 			const labels = uvData.map((feed, index) => {
 				if (index % datapointsPerLabel === 0) {
 					const date = new Date(feed.created_at)
@@ -125,7 +175,12 @@ function UVChart() {
 	}, [uvData])
 
 	const handleRefresh = () => {
-		fetchDataAndRenderChart()
+		setLoading(true)
+		if (selectedModel) {
+			handleAlgorithmSelect(selectedModel)
+		} else {
+			fetchDataAndRenderChart()
+		}
 	}
 
 	return (
@@ -134,7 +189,11 @@ function UVChart() {
 				<div className="flex items-center justify-between py-5">
 					<div>
 						<h1 className="h1">UV Chart</h1>
-						<p>Historical data of {hours} hours ago</p>
+						{selectedModel ? (
+							<p>Forecasted data using {selectedModel} model</p>
+						) : (
+							<p>Historical data of {hours} hours ago</p>
+						)}
 					</div>
 					<div className="flex">
 						<div>
@@ -146,10 +205,20 @@ function UVChart() {
 					</div>
 				</div>
 				<div
-					className="flex"
+					className="flex items-center justify-center align-middle"
 					style={{ width: '70rem', height: '25rem', marginBottom: '2rem' }}
 				>
-					<canvas ref={chartRef}></canvas>
+					{loading ? (
+						<>
+							<div className="mb-10">
+								<span className="loading loading-ring loading-lg"></span>
+								<span className="loading loading-ring loading-lg"></span>
+								<span className="loading loading-ring loading-lg"></span>
+							</div>
+						</>
+					) : (
+						<canvas ref={chartRef}></canvas>
+					)}
 				</div>
 			</div>
 		</div>

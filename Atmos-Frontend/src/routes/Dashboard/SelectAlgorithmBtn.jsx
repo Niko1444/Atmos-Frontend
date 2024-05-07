@@ -6,13 +6,13 @@ function SelectAlgorithmBtn({ onSelectAlgorithm }) {
 
 	const handleSelectAlgorithm = (algorithm) => {
 		setSelectedAlgorithm(algorithm)
-		setIsOpen(false) // Close the dropdown after selecting an algorithm
-		onSelectAlgorithm(algorithm) // Notify the parent component about the selected algorithm
+		setIsOpen(false)
+		onSelectAlgorithm(algorithm)
 	}
 
 	const handleUnselectAlgorithm = () => {
 		setSelectedAlgorithm('')
-		onSelectAlgorithm('') // Notify the parent component about the unselected algorithm
+		onSelectAlgorithm('')
 	}
 
 	return (
@@ -36,17 +36,18 @@ function SelectAlgorithmBtn({ onSelectAlgorithm }) {
 						</button>
 					</li>
 					<li>
-						<button onClick={() => handleSelectAlgorithm('LSTM')}>LSTM</button>
+						<button onClick={() => handleSelectAlgorithm('GB')}>GB</button>
 					</li>
 					<li>
-						<button onClick={() => handleSelectAlgorithm('Prophet + LSTM')}>
-							Prophet + LSTM
-						</button>
+						<button onClick={() => handleSelectAlgorithm('XGB')}>XGB</button>
+					</li>
+					<li>
+						<button onClick={() => handleSelectAlgorithm('RF')}>RF</button>
 					</li>
 					{selectedAlgorithm && (
 						<li>
-							<button onClick={handleUnselectAlgorithm} className=" font-thin">
-								Unselect
+							<button onClick={handleUnselectAlgorithm} className="font-thin">
+								---Unselect---
 							</button>
 						</li>
 					)}

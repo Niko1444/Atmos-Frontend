@@ -1,19 +1,29 @@
+// Import necessary libraries
 import React, { useEffect, useRef, useState } from 'react'
 import Chart from 'chart.js/auto'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
+
+// Import Componets
 import SelectAlgorithmBtn from '../../routes/Dashboard/SelectAlgorithmBtn'
-import { fetchCODataAPI } from '../../api/api' // Assuming you have an API function for fetching CO data
 
-import { hours } from './ChartVariable'
-import { datapointsPerLabel } from './ChartVariable'
-
+// Import Chart Variables
+import { hours, datapointsPerLabel } from './ChartVariable'
 import { generateChartDataLabels } from './ChartVariable'
+
+// Import API
+import { fetchCODataAPI } from '../../api/api'
+import { getCOProphetAPI } from '../../api/callAPIModels'
+import { getCOGBAPI } from '../../api/callAPIModels'
+import { getCOXGBAPI } from '../../api/callAPIModels'
+import { getCORFAPI } from '../../api/callAPIModels'
 
 Chart.register(ChartDataLabels)
 
 function COChart() {
 	const chartRef = useRef(null)
+	const [selectedModel, setSelectedModel] = useState(null)
 	const [coData, setCOData] = useState([])
+	const [loading, setLoading] = useState(true)
 
 	useEffect(() => {
 		fetchDataAndRenderChart()
@@ -28,13 +38,50 @@ function COChart() {
 			const data = await fetchCODataAPI(start, end)
 			const filteredData = data.filter((feed) => parseFloat(feed.field4) !== 0)
 			setCOData(filteredData)
+			setLoading(false)
 		} catch (error) {
 			console.error('Error fetching CO data:', error)
+			setLoading(false)
 		}
 	}
 
-	const handleAlgorithmSelect = (algorithm) => {
-		console.log('Selected algorithm:', algorithm)
+	const handleAlgorithmSelect = async (algorithm) => {
+		setSelectedModel(algorithm)
+		try {
+			let data
+			setLoading(true)
+			switch (algorithm) {
+				case 'Prophet':
+					data = await getCOProphetAPI()
+					break
+				case 'Gradient Boosting':
+					data = await getCOGBAPI()
+					break
+				case 'XGB':
+					data = await getCOXGBAPI()
+					break
+				case 'Random Forest':
+					data = await getCORFAPI()
+					break
+				default:
+					data = await fetchDataAndRenderChart()
+			}
+
+			const forecast_dates = data.forecast_dates
+			const forecast_values = data.forecast_values
+			const forecastData = forecast_dates.map((date, index) => {
+				return {
+					field4: forecast_values[index],
+					created_at: date,
+				}
+			})
+
+			setCOData(forecastData)
+			setLoading(false)
+		} catch (error) {
+			console.error('Error fetching temperature data:', error)
+			setLoading(false)
+		}
 	}
 
 	useEffect(() => {
@@ -90,19 +137,15 @@ function COChart() {
 							callbacks: {
 								label: function (context) {
 									let label = ''
-
 									if (context.dataset.label) {
 										label += context.dataset.label + ': '
 									}
-
 									if (context.parsed.y !== null) {
 										label += context.parsed.y
 									}
-
 									if (context.dataIndex < coData.length) {
 										const feed = coData[context.dataIndex]
 										const date = new Date(feed.created_at)
-
 										label =
 											date.toLocaleTimeString('en-US', { hour12: true }) +
 											' - ' +
@@ -125,7 +168,12 @@ function COChart() {
 	}, [coData])
 
 	const handleRefresh = () => {
-		fetchDataAndRenderChart()
+		setLoading(true)
+		if (selectedModel) {
+			handleAlgorithmSelect(selectedModel)
+		} else {
+			fetchDataAndRenderChart()
+		}
 	}
 
 	return (
@@ -134,7 +182,11 @@ function COChart() {
 				<div className="flex items-center justify-between py-5">
 					<div>
 						<h1 className="h1">CO Chart</h1>
-						<p>Historical data of {hours} hours ago</p>
+						{selectedModel ? (
+							<p>Forecasted data using {selectedModel} model</p>
+						) : (
+							<p>Historical data of {hours} hours ago</p>
+						)}
 					</div>
 					<div className="flex">
 						<div>
@@ -146,10 +198,20 @@ function COChart() {
 					</div>
 				</div>
 				<div
-					className="flex"
+					className="flex items-center justify-center align-middle"
 					style={{ width: '70rem', height: '25rem', marginBottom: '2rem' }}
 				>
-					<canvas ref={chartRef}></canvas>
+					{loading ? (
+						<>
+							<div className="mb-10">
+								<span className="loading loading-ring loading-lg"></span>
+								<span className="loading loading-ring loading-lg"></span>
+								<span className="loading loading-ring loading-lg"></span>
+							</div>
+						</>
+					) : (
+						<canvas ref={chartRef}></canvas>
+					)}
 				</div>
 			</div>
 		</div>
