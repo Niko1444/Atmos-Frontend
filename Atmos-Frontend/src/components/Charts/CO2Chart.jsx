@@ -1,17 +1,29 @@
+// Import necessary libraries
 import React, { useEffect, useRef, useState } from 'react'
 import Chart from 'chart.js/auto'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
-import SelectAlgorithmBtn from '../../routes/Dashboard/SelectAlgorithmBtn'
-import { fetchCO2DataAPI } from '../../api/api' // Assuming you have an API function for fetching CO2 data
 
+// Import Componets
+import SelectAlgorithmBtn from '../../routes/Dashboard/SelectAlgorithmBtn'
+
+// Import Chart Variables
 import { hours, datapointsPerLabel } from './ChartVariable'
 import { generateChartDataLabels } from './ChartVariable'
+
+// Import API
+import { fetchCO2DataAPI } from '../../api/api'
+import { getCO2ProphetAPI } from '../../api/callAPIModels'
+import { getCO2GBAPI } from '../../api/callAPIModels'
+import { getCO2XGBAPI } from '../../api/callAPIModels'
+import { getCO2RFAPI } from '../../api/callAPIModels'
 
 Chart.register(ChartDataLabels)
 
 function CO2Chart() {
 	const chartRef = useRef(null)
+	const [selectedModel, setSelectedModel] = useState(null)
 	const [co2Data, setCO2Data] = useState([])
+	const [loading, setLoading] = useState(true)
 
 	useEffect(() => {
 		fetchDataAndRenderChart()
@@ -26,13 +38,50 @@ function CO2Chart() {
 			const data = await fetchCO2DataAPI(start, end)
 			const filteredData = data.filter((feed) => parseFloat(feed.field3) !== 0)
 			setCO2Data(filteredData)
+			setLoading(false)
 		} catch (error) {
 			console.error('Error fetching CO2 data:', error)
+			setLoading(false)
 		}
 	}
 
-	const handleAlgorithmSelect = (algorithm) => {
-		console.log('Selected algorithm:', algorithm)
+	const handleAlgorithmSelect = async (algorithm) => {
+		setSelectedModel(algorithm)
+		try {
+			let data
+			setLoading(true)
+			switch (algorithm) {
+				case 'Prophet':
+					data = await getCO2ProphetAPI()
+					break
+				case 'GB':
+					data = await getCO2GBAPI()
+					break
+				case 'XGB':
+					data = await getCO2XGBAPI()
+					break
+				case 'RF':
+					data = await getCO2RFAPI()
+					break
+				default:
+					data = await fetchDataAndRenderChart()
+			}
+
+			const forecast_dates = data.forecast_dates
+			const forecast_values = data.forecast_values
+			const forecastData = forecast_dates.map((date, index) => {
+				return {
+					field3: forecast_values[index],
+					created_at: date,
+				}
+			})
+
+			setCO2Data(forecastData)
+			setLoading(false)
+		} catch (error) {
+			console.error('Error fetching temperature data:', error)
+			setLoading(false)
+		}
 	}
 
 	useEffect(() => {
@@ -123,7 +172,12 @@ function CO2Chart() {
 	}, [co2Data])
 
 	const handleRefresh = () => {
-		fetchDataAndRenderChart()
+		setLoading(true)
+		if (selectedModel) {
+			handleAlgorithmSelect(selectedModel)
+		} else {
+			fetchDataAndRenderChart()
+		}
 	}
 
 	return (
@@ -132,7 +186,11 @@ function CO2Chart() {
 				<div className="flex items-center justify-between py-5">
 					<div>
 						<h1 className="h1">CO2 Chart</h1>
-						<p>Historical data of {hours} hours ago</p>
+						{selectedModel ? (
+							<p>Forecasted data using {selectedModel} model</p>
+						) : (
+							<p>Historical data of {hours} hours ago</p>
+						)}
 					</div>
 					<div className="flex">
 						<div>
@@ -144,10 +202,20 @@ function CO2Chart() {
 					</div>
 				</div>
 				<div
-					className="flex"
+					className="flex items-center justify-center align-middle"
 					style={{ width: '70rem', height: '25rem', marginBottom: '2rem' }}
 				>
-					<canvas ref={chartRef}></canvas>
+					{loading ? (
+						<>
+							<div className="mb-10">
+								<span className="loading loading-ring loading-lg"></span>
+								<span className="loading loading-ring loading-lg"></span>
+								<span className="loading loading-ring loading-lg"></span>
+							</div>
+						</>
+					) : (
+						<canvas ref={chartRef}></canvas>
+					)}
 				</div>
 			</div>
 		</div>

@@ -9,7 +9,7 @@ import PMChart from '../../components/Charts/PMChart'
 function Dashboard() {
 	return (
 		<>
-			<div>
+			<div className="pb-20 pt-16">
 				<TempChart />
 				<HumidityChart />
 				<CO2Chart />

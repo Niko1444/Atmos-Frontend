@@ -104,6 +104,13 @@ const colorRanges = {
 		{ max: 75, color: '#f8956b' },
 		{ max: Infinity, color: '#f56773' },
 	],
+	categoryAQI: [
+		{ max: 10, color: '#98d6a6' },
+		{ max: 8, color: '#b9d188' },
+		{ max: 6, color: '#edb066' },
+		{ max: 4, color: '#f8956b' },
+		{ max: 2, color: '#f56773' },
+	],
 }
 
 // const colorsIndicator = {
@@ -126,7 +133,9 @@ function Overlay() {
 		lastUpdate: '',
 	})
 
-	const [currentAQI, setCurrentAQI] = useState('Loading...')
+	const [currentCategoryAQI, setCurrentCategoryAQI] = useState('None')
+
+	const [currentAQI, setCurrentAQI] = useState('...')
 
 	const pRef = useRef(null)
 
@@ -258,6 +267,7 @@ function Overlay() {
 			try {
 				const response = await getAQIAPI()
 				setCurrentAQI(response.aqi_score)
+				setCurrentCategoryAQI(response.air_quality_category)
 			} catch (error) {
 				console.error('Failed to fetch AQI:', error)
 				setCurrentAQI('Error')
@@ -321,8 +331,13 @@ function Overlay() {
 							<p className="mb-[-1rem] mt-[-2rem] py-0 text-[6rem]">
 								{currentAQI}
 							</p>
-							<p className="my-0 py-0 text-xl font-light text-green-500">
-								Fair
+							<p
+								className="my-0 py-0 text-xl font-bold"
+								style={{
+									color: getColorForValue(currentAQI, 'categoryAQI'),
+								}}
+							>
+								{currentCategoryAQI}
 							</p>
 							{/* Current Date and Time */}
 							<p className="pb-4 text-sm">{realtime} (last update)</p>
@@ -339,7 +354,7 @@ function Overlay() {
 							>
 								<p
 									ref={pRef}
-									className="text-center text-lg font-medium text-accent"
+									className="text-md text-center font-medium text-accent"
 								>
 									Tips: <br /> {determineTip()[currentTipIndex]}
 								</p>
