@@ -1,4 +1,4 @@
-export const hours = 12
+export const hours = 100
 export const datapointsPerLabel = 3
 
 /**

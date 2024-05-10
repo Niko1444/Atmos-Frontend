@@ -37,7 +37,7 @@ const AboutPage = () => {
 						</p>
 						<p className="mb-4 text-center text-lg text-accent">
 							Duong Trong Nghia, Le Tien Phat, Tran Vu Khanh Hung, Vo Hoai Bao,
-							Dr. Le Duy Tan, and Dr. Huynh Kha Tu.
+							Nguyen Huynh Thao My, Dr. Le Duy Tan, and Dr. Huynh Kha Tu.
 						</p>
 					</div>
 				)}
