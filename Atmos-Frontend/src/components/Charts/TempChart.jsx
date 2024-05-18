@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Chart from 'chart.js/auto'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
+import { useMediaQuery } from 'react-responsive'
 
 // Import Components
 import SelectAlgorithmBtn from '../../routes/Dashboard/SelectAlgorithmBtn'
@@ -24,6 +25,9 @@ function TempChart() {
 	const [selectedModel, setSelectedModel] = useState(null)
 	const [temperatureData, setTemperatureData] = useState([])
 	const [loading, setLoading] = useState(true)
+	const isDesktopOrLaptop = useMediaQuery({
+		query: '(min-width: 938px)',
+	})
 
 	useEffect(() => {
 		fetchDataAndRenderChart()

@@ -17,7 +17,8 @@ import CustomUser from '../../../assets/icon-user.png'
 import './Map.css'
 
 function Map() {
-	const firtsPosition = [10.86748937028891, 106.79438149449618]
+	// const firtsPosition = [10.86748937028891, 106.79438149449618]
+	const firtsPosition = [10.850363, 106.771915]
 
 	const customIconMarker = new L.Icon({
 		iconUrl: CustomMarker,
@@ -34,7 +35,8 @@ function Map() {
 	const stationMarkers = [
 		{
 			key: 'marker1',
-			position: [10.86748937028891, 106.79438149449618],
+			// position: [10.86748937028891, 106.79438149449618],
+			position: [10.850363, 106.771915],
 			children: 'Station 1 - Thu Duc City',
 		},
 	]
