@@ -9,21 +9,18 @@ function Layout({ children }) {
 
 	return (
 		<>
-			{isDesktopOrLaptop && (
+			{isDesktopOrLaptop ? (
 				<div className="flex flex-row">
 					<Menu />
 					<div className="ml-60 flex flex-1 flex-col">
 						<div className="flex items-center justify-center">{children}</div>
 					</div>
 				</div>
-			)}
-			{!isDesktopOrLaptop && (
-				<>
-					<div className="flex flex-col">
-						<TopNavigation />
-						<div className="flex items-center justify-center">{children}</div>
-					</div>
-				</>
+			) : (
+				<div className="flex flex-col">
+					<TopNavigation />
+					<div className="flex items-center justify-center">{children}</div>
+				</div>
 			)}
 		</>
 	)

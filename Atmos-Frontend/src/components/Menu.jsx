@@ -28,7 +28,7 @@ const Menu = () => {
 	return (
 		<>
 			<div className="fixed left-0 top-0 z-10 flex h-screen w-60 flex-col items-center justify-center border-r-2 border-black bg-primary">
-				<div className=" mb-12 mt-12 flex h-32 w-40 transform items-center justify-center rounded-xl bg-white shadow-md">
+				<div className="mb-12 mt-12 flex h-32 w-40 transform items-center justify-center rounded-xl bg-white shadow-md">
 					<img
 						src={logoBadge}
 						alt="Atmos logo badge"

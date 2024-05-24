@@ -17,19 +17,19 @@ function TopNavigation() {
 		>
 			<NavLink
 				to="/"
-				className={`btn flex-grow rounded-none border-none text-black hover:bg-accent hover:text-white ${getActiveStyles('/')}`}
+				className={`btn w-1/3 rounded-none border-none pb-12 pt-4 text-xl text-black hover:bg-accent hover:text-white ${getActiveStyles('/')}`}
 			>
 				Map
 			</NavLink>
 			<NavLink
 				to="/dashboard"
-				className={`btn flex-grow rounded-none border-none text-black hover:bg-accent hover:text-white ${getActiveStyles('/dashboard')}`}
+				className={`btn w-1/3 rounded-none border-none pb-12 pt-4 text-xl text-black hover:bg-accent hover:text-white ${getActiveStyles('/dashboard')}`}
 			>
 				Dashboard
 			</NavLink>
 			<NavLink
 				to="/about"
-				className={`btn flex-grow rounded-none border-none text-black hover:bg-accent hover:text-white ${getActiveStyles('/about')}`}
+				className={`btn w-1/3 rounded-none border-none pb-12 pt-4 text-xl text-black hover:bg-accent hover:text-white ${getActiveStyles('/about')}`}
 			>
 				About
 			</NavLink>

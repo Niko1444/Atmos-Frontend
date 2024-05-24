@@ -122,7 +122,7 @@ const colorRanges = {
 // 	hazardous: '#f56773',
 // }
 
-function Overlay() {
+function MobileOverlay() {
 	const [sensorData, setSensorData] = useState({
 		field1: 'Loading...', // Temperature
 		field2: 'Loading...', // Humidity
@@ -132,6 +132,8 @@ function Overlay() {
 		field6: 'Loading...', // PM2.5
 		lastUpdate: '',
 	})
+
+	const [showOverlay, setShowOverlay] = useState(false)
 
 	const [currentCategoryAQI, setCurrentCategoryAQI] = useState('None')
 
@@ -295,162 +297,162 @@ function Overlay() {
 		return range ? range.color : '#ffffff'
 	}
 
-	const toggleTableOverlay = () => {
-		setShowTableOverlay(!showTableOverlay)
+	const toggleOverlay = () => {
+		setShowOverlay(!showOverlay)
 	}
 
 	return (
-		<div className="absolute right-[22rem] top-[2rem]">
+		<>
 			<div
-				className={`backdrop ${showTableOverlay ? 'show' : ''}`}
-				onClick={toggleTableOverlay}
-			></div>
-			<div
-				className="absolute z-20 flex w-[20rem] cursor-pointer flex-col rounded-[3rem] bg-accent shadow-xl"
-				style={{ height: '90vh' }}
-				onClick={toggleTableOverlay}
+				className="btn absolute bottom-[1.5rem] flex h-[3rem] w-9/12 items-center justify-center rounded-3xl bg-neutral align-middle text-xl text-black hover:bg-accent hover:text-white"
+				onClick={toggleOverlay}
 			>
-				{/* Top Overlay */}
-				<div className="flex h-32 w-full flex-col items-center justify-center rounded-[3rem] bg-accent align-middle">
-					<h1 className="font-sans mx-10 text-center text-2xl font-medium text-primary">
-						Nearest Station From Your Location:
-					</h1>
-					<h2 className="font-sans mx-10 my-1 text-center text-2xl font-light text-primary">
-						Thu Duc City
-					</h2>
-				</div>
-				{/* Bottom Overlay */}
-				<div className="flex w-full flex-grow flex-col rounded-[3rem] bg-neutral text-black">
-					{/* Current AQI and quick tips */}
-					<div className="relative flex h-32 w-full flex-grow flex-col items-center justify-around bg-neutral pt-4">
-						{/* LIVE Badge */}
-						<div className="absolute left-4 top-4 flex h-8 w-16 items-center justify-center rounded-lg bg-red-400">
-							<p className="text-primary">LIVE</p>
-						</div>
-						<div className="flex flex-col items-center justify-center">
-							<p className="mb-[-1rem] mt-[-2rem] py-0 text-[6rem]">
-								{currentAQI}
-							</p>
-							<p
-								className="my-0 py-0 text-xl font-bold"
-								style={{
-									color: getColorForValue(currentAQI, 'categoryAQI'),
-								}}
-							>
-								{currentCategoryAQI}
-							</p>
-							{/* Current Date and Time */}
-							<p className="pb-4 text-sm">{realtime} (last update)</p>
-						</div>
-						<div className="mx-4 h-28">
-							<Transition
-								show={true}
-								enter="transition-opacity duration-500"
-								enterFrom="opacity-0"
-								enterTo="opacity-100"
-								leave="transition-opacity duration-500"
-								leaveFrom="opacity-100"
-								leaveTo="opacity-0"
-							>
-								<p
-									ref={pRef}
-									className="text-md text-center font-medium text-accent"
-								>
-									Tips: <br /> {determineTip()[currentTipIndex]}
-								</p>
-							</Transition>
-						</div>
-					</div>
-					{/* Grid Layout of 6 Air Quality Indexes */}
-					<div className="m-0 grid grid-cols-2 gap-0 p-0">
-						<div
-							className="flex h-28 w-full flex-col items-center justify-center border-2 border-x-0 border-b-0"
-							style={{
-								backgroundColor: getColorForValue(
-									sensorData.field1,
-									'temperature',
-								),
-							}}
-						>
-							<div className="text-2xl font-medium">
-								<div>{sensorData.field1 + '°C'}</div>
-							</div>
-							<div className="text-">Temperature</div>
-						</div>
-						<div
-							className="flex h-28 w-full flex-col items-center justify-center border-2 border-b-0 border-r-0"
-							style={{
-								backgroundColor: getColorForValue(
-									sensorData.field2,
-									'humidity',
-								),
-							}}
-						>
-							<div className="text-2xl font-medium">
-								<div>{sensorData.field2 + '%'}</div>
-							</div>
-							<div>Humidity</div>
-						</div>
-						<div
-							className="flex h-28 w-full flex-col items-center justify-center border-2 border-x-0 border-b-0"
-							style={{
-								backgroundColor: getColorForValue(sensorData.field3, 'co2'),
-							}}
-						>
-							<div className="text-xl font-medium">
-								<div>{sensorData.field3 + 'ppm'}</div>
-							</div>
-							<div>CO2</div>
-						</div>
-						<div
-							className="flex h-28 w-full flex-col items-center justify-center border-2 border-b-0 border-r-0"
-							style={{
-								backgroundColor: getColorForValue(sensorData.field4, 'co'),
-							}}
-						>
-							<div className="text-xl font-medium">
-								<div>{sensorData.field4 + 'ppm'}</div>
-							</div>
-							<div>CO</div>
-						</div>
-						<div
-							className="flex h-28 w-full flex-col items-center justify-center rounded-bl-[3rem] border-2 border-x-0 border-b-0"
-							style={{
-								backgroundColor: getColorForValue(sensorData.field5, 'uvIndex'),
-							}}
-						>
-							<div className="text-2xl font-medium">
-								<div>{sensorData.field5}</div>
-							</div>
-							<div>UV Index</div>
-						</div>
-						<div
-							className="flex h-28 w-full flex-col items-center justify-center rounded-br-[3rem] border-2 border-b-0 border-r-0"
-							style={{
-								backgroundColor: getColorForValue(sensorData.field6, 'pm25'),
-							}}
-						>
-							<div className="text-xl font-medium">
-								<div>{sensorData.field6 + 'ppm'}</div>
-							</div>
-							<div>PM2.5</div>
-						</div>
-					</div>
-				</div>
+				Air Status
 			</div>
-			{/* Table Overlay */}
-			{showTableOverlay && (
-				<div className="absolute right-[-2.4rem] top-0 z-10 flex h-[90vh] w-[40rem] flex-col overflow-hidden rounded-bl-[3rem] rounded-tl-[3rem] bg-primary shadow-xl xl:w-[60rem]">
-					<div className="modal-scrollbar ml-8 mr-[3rem] mt-8 overflow-y-auto">
-						<div className="flex h-8 w-16 items-center justify-center rounded-xl bg-accent p-5 px-14">
-							<p className="font-bold text-primary">MEASURE</p>
+			{showOverlay && (
+				<div className="absolute top-[13vh] flex scale-[80%] justify-center align-middle">
+					<div
+						className="absolute z-20 flex w-[20rem] cursor-pointer flex-col rounded-[3rem] bg-accent shadow-xl"
+						style={{ height: '90vh' }}
+					>
+						{/* Top Overlay */}
+						<div className="flex h-28 w-full flex-col items-center justify-center rounded-[3rem] bg-accent align-middle">
+							<h1 className="font-sans mx-10 text-center text-xl font-medium text-primary">
+								Nearest Station From Your Location:
+							</h1>
+							<h2 className="font-sans mx-10 my-1 text-center text-xl font-light text-primary">
+								Thu Duc City
+							</h2>
 						</div>
-						<MeasuresModal />
+						{/* Bottom Overlay */}
+						<div className="flex w-full flex-grow flex-col rounded-[3rem] bg-neutral text-black">
+							{/* Current AQI and quick tips */}
+							<div className="relative flex h-32 w-full flex-grow flex-col items-center justify-around bg-neutral pt-4">
+								{/* LIVE Badge */}
+								<div className="absolute left-4 top-4 flex h-8 w-16 items-center justify-center rounded-lg bg-red-400">
+									<p className="text-primary">LIVE</p>
+								</div>
+								<div className="flex flex-col items-center justify-center">
+									<p className="mb-[-1rem] mt-[-2rem] py-0 text-[4rem]">
+										{currentAQI}
+									</p>
+									<p
+										className="my-0 py-0 text-xl font-bold"
+										style={{
+											color: getColorForValue(currentAQI, 'categoryAQI'),
+										}}
+									>
+										{currentCategoryAQI}
+									</p>
+									{/* Current Date and Time */}
+									<p className="text-sm">{realtime} (last update)</p>
+								</div>
+								<div className="mx-4 mb-4 h-16 text-[0.8rem]">
+									<Transition
+										show={true}
+										enter="transition-opacity duration-500"
+										enterFrom="opacity-0"
+										enterTo="opacity-100"
+										leave="transition-opacity duration-500"
+										leaveFrom="opacity-100"
+										leaveTo="opacity-0"
+									>
+										<p
+											ref={pRef}
+											className="text-md text-center font-medium text-accent"
+										>
+											Tips: <br /> {determineTip()[currentTipIndex]}
+										</p>
+									</Transition>
+								</div>
+							</div>
+							{/* Grid Layout of 6 Air Quality Indexes */}
+							<div className="m-0 grid grid-cols-2 gap-0 p-0">
+								<div
+									className="flex h-16 w-full flex-col items-center justify-center border-2 border-x-0 border-b-0 text-[0.8rem]"
+									style={{
+										backgroundColor: getColorForValue(
+											sensorData.field1,
+											'temperature',
+										),
+									}}
+								>
+									<div className="text-2xl font-medium">
+										<div>{sensorData.field1 + '°C'}</div>
+									</div>
+									<div className="text-">Temperature</div>
+								</div>
+								<div
+									className="flex h-16 w-full flex-col items-center justify-center border-2 border-b-0 border-r-0 text-[0.8rem]"
+									style={{
+										backgroundColor: getColorForValue(
+											sensorData.field2,
+											'humidity',
+										),
+									}}
+								>
+									<div className="text-2xl font-medium">
+										<div>{sensorData.field2 + '%'}</div>
+									</div>
+									<div>Humidity</div>
+								</div>
+								<div
+									className="flex h-16 w-full flex-col items-center justify-center border-2 border-x-0 border-b-0 text-[0.8rem]"
+									style={{
+										backgroundColor: getColorForValue(sensorData.field3, 'co2'),
+									}}
+								>
+									<div className="text-xl font-medium">
+										<div>{sensorData.field3 + 'ppm'}</div>
+									</div>
+									<div>CO2</div>
+								</div>
+								<div
+									className="flex h-16 w-full flex-col items-center justify-center border-2 border-b-0 border-r-0 text-[0.8rem]"
+									style={{
+										backgroundColor: getColorForValue(sensorData.field4, 'co'),
+									}}
+								>
+									<div className="text-xl font-medium">
+										<div>{sensorData.field4 + 'ppm'}</div>
+									</div>
+									<div>CO</div>
+								</div>
+								<div
+									className="flex h-16 w-full flex-col items-center justify-center rounded-bl-[3rem] border-2 border-x-0 border-b-0 text-[0.8rem]"
+									style={{
+										backgroundColor: getColorForValue(
+											sensorData.field5,
+											'uvIndex',
+										),
+									}}
+								>
+									<div className="text-2xl font-medium">
+										<div>{sensorData.field5}</div>
+									</div>
+									<div>UV Index</div>
+								</div>
+								<div
+									className="flex h-16 w-full flex-col items-center justify-center rounded-br-[3rem] border-2 border-b-0 border-r-0 text-[0.8rem]"
+									style={{
+										backgroundColor: getColorForValue(
+											sensorData.field6,
+											'pm25',
+										),
+									}}
+								>
+									<div className="text-xl font-medium">
+										<div>{sensorData.field6 + 'ppm'}</div>
+									</div>
+									<div>PM2.5</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			)}
-		</div>
+		</>
 	)
 }
 
-export default Overlay
+export default MobileOverlay
