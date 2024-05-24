@@ -25,9 +25,6 @@ function TempChart() {
 	const [selectedModel, setSelectedModel] = useState(null)
 	const [temperatureData, setTemperatureData] = useState([])
 	const [loading, setLoading] = useState(true)
-	const isDesktopOrLaptop = useMediaQuery({
-		query: '(min-width: 938px)',
-	})
 
 	useEffect(() => {
 		fetchDataAndRenderChart()
@@ -205,7 +202,11 @@ function TempChart() {
 				</div>
 				<div
 					className="flex items-center justify-center align-middle"
-					style={{ width: '70rem', height: '25rem', marginBottom: '2rem' }}
+					style={{
+						width: '70rem',
+						height: '25rem',
+						marginBottom: '2rem',
+					}}
 				>
 					{loading ? (
 						<>
