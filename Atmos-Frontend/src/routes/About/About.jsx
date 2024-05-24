@@ -52,7 +52,7 @@ const AboutPage = () => {
 				leaveTo="opacity-0"
 			>
 				{(ref) => (
-					<p className="mb-4 text-lg text-gray-800" ref={ref}>
+					<p className="mb-4 text-center text-lg text-gray-800" ref={ref}>
 						The system aims to provide accurate and up-to-date information about
 						air quality to residents of smart cities, enabling them to make
 						informed decisions about their activities and health. By leveraging
@@ -71,7 +71,7 @@ const AboutPage = () => {
 				leaveTo="opacity-0"
 			>
 				{(ref) => (
-					<p className="mb-4 text-lg text-gray-800" ref={ref}>
+					<p className="mb-4 text-center text-lg text-gray-800" ref={ref}>
 						For inquiries or further information, please contact Dr. Le Duy Tan
 						at{' '}
 						<a
