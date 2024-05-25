@@ -1,10 +1,8 @@
-import { useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import './App.css'
 
 // Import Pages
 import Home from './routes/Home/Home'
-import Setting from './routes/Setting/Setting'
 import Dashboard from './routes/Dashboard/Dashboard'
 import Layout from './components/Layout'
 import About from './routes/About/About'

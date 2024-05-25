@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { fetchSensorDataAPI } from '../../../api/api'
 import { getAQIAPI } from '../../../api/callAPIModels'
-import MeasuresModal from '../Navbar/MeasuresModal'
 import { Transition } from '@headlessui/react'
 
 import './Scrollbar.css'
