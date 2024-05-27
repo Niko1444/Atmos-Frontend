@@ -41,7 +41,7 @@ function Map() {
 	const stationMarkers = [
 		{
 			key: 'marker1',
-			position: [10.850363, 106.771915],
+			position: [10.877707, 106.802017],
 			children: 'Station 1 - Thu Duc City',
 		},
 	]
