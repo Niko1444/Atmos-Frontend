@@ -4,7 +4,7 @@ import Chart from 'chart.js/auto'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
 
 // Import Chart Variables
-import { hours, datapointsPerLabel } from './ChartVariable'
+import { datapointsPerLabel } from './ChartVariable'
 import { generateChartDataLabels } from './ChartVariable'
 
 // Import Components
@@ -19,7 +19,7 @@ import { getHumidityRFAPI } from '../../api/callAPIModels'
 
 Chart.register(ChartDataLabels)
 
-function HumidityChart() {
+function HumidityChart({ hours }) {
 	const chartRef = useRef(null)
 	const [selectedModel, setSelectedModel] = useState(null)
 	const [humidityData, setHumidityData] = useState([])

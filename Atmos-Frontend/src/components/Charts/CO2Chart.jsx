@@ -7,7 +7,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels'
 import SelectAlgorithmBtn from '../../routes/Dashboard/SelectAlgorithmBtn'
 
 // Import Chart Variables
-import { hours, datapointsPerLabel } from './ChartVariable'
+import { datapointsPerLabel } from './ChartVariable'
 import { generateChartDataLabels } from './ChartVariable'
 
 // Import API
@@ -19,7 +19,7 @@ import { getCO2RFAPI } from '../../api/callAPIModels'
 
 Chart.register(ChartDataLabels)
 
-function CO2Chart() {
+function CO2Chart({ hours }) {
 	const chartRef = useRef(null)
 	const [selectedModel, setSelectedModel] = useState(null)
 	const [co2Data, setCO2Data] = useState([])
@@ -36,7 +36,7 @@ function CO2Chart() {
 			const start = new Date(Date.now() - hours * hour).toISOString()
 
 			const data = await fetchCO2DataAPI(start, end)
-			const filteredData = data.filter((feed) => parseFloat(feed.field3) !== 0)
+			const filteredData = data.filter((feed) => parseFloat(feed.field4) !== 0)
 			setCO2Data(filteredData)
 			setLoading(false)
 		} catch (error) {
@@ -71,7 +71,7 @@ function CO2Chart() {
 			const forecast_values = data.forecast_values
 			const forecastData = forecast_dates.map((date, index) => {
 				return {
-					field3: forecast_values[index],
+					field4: forecast_values[index],
 					created_at: date,
 				}
 			})
@@ -87,7 +87,7 @@ function CO2Chart() {
 	useEffect(() => {
 		if (chartRef.current && co2Data.length > 0) {
 			const ctx = chartRef.current.getContext('2d')
-			const co2Levels = co2Data.map((feed) => parseFloat(feed.field3))
+			const co2Levels = co2Data.map((feed) => parseFloat(feed.field4))
 			const labels = co2Data.map((feed, index) => {
 				if (index % datapointsPerLabel === 0) {
 					const date = new Date(feed.created_at)

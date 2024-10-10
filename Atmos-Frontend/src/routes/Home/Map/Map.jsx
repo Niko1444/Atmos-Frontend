@@ -24,7 +24,10 @@ function Map() {
 	// const firtsPosition = [10.850363, 106.771915]
 
 	// IU Position
-	const firtsPosition = [10.877707, 106.802017]
+	// const firtsPosition = [10.877707, 106.802017]
+
+	// Phan Thiet Position
+	const firtsPosition = [10.92742, 108.10197]
 
 	const customIconMarker = new L.Icon({
 		iconUrl: CustomMarker,
@@ -41,7 +44,7 @@ function Map() {
 	const stationMarkers = [
 		{
 			key: 'marker1',
-			position: [10.877707, 106.802017],
+			position: [10.92742, 108.10197],
 			children: 'Station 1 - Thu Duc City',
 		},
 	]

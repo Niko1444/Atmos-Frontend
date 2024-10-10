@@ -7,7 +7,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels'
 import SelectAlgorithmBtn from '../../routes/Dashboard/SelectAlgorithmBtn'
 
 // Import Chart Variables
-import { hours, datapointsPerLabel } from './ChartVariable'
+import { datapointsPerLabel } from './ChartVariable'
 import { generateChartDataLabels } from './ChartVariable'
 
 // Import API
@@ -19,7 +19,7 @@ import { getCORFAPI } from '../../api/callAPIModels'
 
 Chart.register(ChartDataLabels)
 
-function COChart() {
+function COChart({ hours }) {
 	const chartRef = useRef(null)
 	const [selectedModel, setSelectedModel] = useState(null)
 	const [coData, setCOData] = useState([])
@@ -36,7 +36,7 @@ function COChart() {
 			const start = new Date(Date.now() - hours * hour).toISOString()
 
 			const data = await fetchCODataAPI(start, end)
-			const filteredData = data.filter((feed) => parseFloat(feed.field4) !== 0)
+			const filteredData = data.filter((feed) => parseFloat(feed.field3) !== 0)
 			setCOData(filteredData)
 			setLoading(false)
 		} catch (error) {
@@ -71,7 +71,7 @@ function COChart() {
 			const forecast_values = data.forecast_values
 			const forecastData = forecast_dates.map((date, index) => {
 				return {
-					field4: forecast_values[index],
+					field3: forecast_values[index],
 					created_at: date,
 				}
 			})
@@ -87,7 +87,7 @@ function COChart() {
 	useEffect(() => {
 		if (chartRef.current && coData.length > 0) {
 			const ctx = chartRef.current.getContext('2d')
-			const coLevels = coData.map((feed) => parseFloat(feed.field4))
+			const coLevels = coData.map((feed) => parseFloat(feed.field3))
 			const labels = coData.map((feed, index) => {
 				if (index % datapointsPerLabel === 0) {
 					const date = new Date(feed.created_at)

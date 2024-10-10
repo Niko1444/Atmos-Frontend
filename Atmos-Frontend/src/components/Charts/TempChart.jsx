@@ -8,7 +8,7 @@ import SelectAlgorithmBtn from '../../routes/Dashboard/SelectAlgorithmBtn'
 
 // Import Chart Variables
 import { generateChartDataLabels } from './ChartVariable'
-import { hours, datapointsPerLabel } from './ChartVariable'
+import { datapointsPerLabel } from './ChartVariable'
 
 // Import API
 import { fetchTemperatureDataAPI } from '../../api/api'
@@ -19,7 +19,7 @@ import { getTemperatureRFAPI } from '../../api/callAPIModels'
 
 Chart.register(ChartDataLabels)
 
-function TempChart() {
+function TempChart({ hours }) {
 	const chartRef = useRef(null)
 	const [selectedModel, setSelectedModel] = useState(null)
 	const [temperatureData, setTemperatureData] = useState([])

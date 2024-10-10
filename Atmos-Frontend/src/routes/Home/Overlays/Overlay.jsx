@@ -126,8 +126,8 @@ function Overlay() {
 	const [sensorData, setSensorData] = useState({
 		field1: 'Loading...', // Temperature
 		field2: 'Loading...', // Humidity
-		field3: 'Loading...', // CO2
-		field4: 'Loading...', // CO
+		field3: 'Loading...', // CO
+		field4: 'Loading...', // CO2
 		field5: 'Loading...', // UV Index
 		field6: 'Loading...', // PM2.5
 		lastUpdate: '',
@@ -157,8 +157,8 @@ function Overlay() {
 		const tempValue = parseFloat(sensorData.field1)
 		const humidityValue = parseFloat(sensorData.field2)
 		const uvIndexValue = parseFloat(sensorData.field5)
-		const co2Value = parseFloat(sensorData.field3)
-		const coValue = parseFloat(sensorData.field4)
+		const coValue = parseFloat(sensorData.field3)
+		const co2Value = parseFloat(sensorData.field4)
 		const pm25Value = parseFloat(sensorData.field6)
 
 		let tipMessage = []
@@ -315,9 +315,9 @@ function Overlay() {
 					<h1 className="font-sans mx-10 text-center text-2xl font-medium text-primary">
 						Nearest Station From Your Location:
 					</h1>
-					<h2 className="font-sans mx-10 my-1 text-center text-2xl font-light text-primary">
+					{/* <h2 className="font-sans mx-10 my-1 text-center text-2xl font-light text-primary">
 						Thu Duc City
-					</h2>
+					</h2> */}
 				</div>
 				{/* Bottom Overlay */}
 				<div className="flex w-full flex-grow flex-col rounded-[3rem] bg-neutral text-black">
@@ -392,26 +392,26 @@ function Overlay() {
 							<div>Humidity</div>
 						</div>
 						<div
-							className="flex h-28 w-full flex-col items-center justify-center border-2 border-x-0 border-b-0"
+							className="flex h-28 w-full flex-col items-center justify-center border-2 border-b-0 border-r-0"
 							style={{
-								backgroundColor: getColorForValue(sensorData.field3, 'co2'),
+								backgroundColor: getColorForValue(sensorData.field3, 'co'),
 							}}
 						>
 							<div className="text-xl font-medium">
 								<div>{sensorData.field3 + 'ppm'}</div>
 							</div>
-							<div>CO2</div>
+							<div>CO</div>
 						</div>
 						<div
-							className="flex h-28 w-full flex-col items-center justify-center border-2 border-b-0 border-r-0"
+							className="flex h-28 w-full flex-col items-center justify-center border-2 border-x-0 border-b-0"
 							style={{
-								backgroundColor: getColorForValue(sensorData.field4, 'co'),
+								backgroundColor: getColorForValue(sensorData.field4, 'co2'),
 							}}
 						>
 							<div className="text-xl font-medium">
 								<div>{sensorData.field4 + 'ppm'}</div>
 							</div>
-							<div>CO</div>
+							<div>CO2</div>
 						</div>
 						<div
 							className="flex h-28 w-full flex-col items-center justify-center rounded-bl-[3rem] border-2 border-x-0 border-b-0"

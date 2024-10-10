@@ -7,7 +7,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels'
 import SelectAlgorithmBtn from '../../routes/Dashboard/SelectAlgorithmBtn'
 
 // Import Chart Variables
-import { hours, datapointsPerLabel } from './ChartVariable'
+import { datapointsPerLabel } from './ChartVariable'
 import { generateChartDataLabels } from './ChartVariable'
 
 // Import API
@@ -19,7 +19,7 @@ import { getUVRFAPI } from '../../api/callAPIModels'
 
 Chart.register(ChartDataLabels)
 
-function UVChart() {
+function UVChart({ hours }) {
 	const chartRef = useRef(null)
 	const [selectedModel, setSelectedModel] = useState(null)
 	const [uvData, setUVData] = useState([])

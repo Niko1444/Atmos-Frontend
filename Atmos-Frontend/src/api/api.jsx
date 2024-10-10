@@ -61,8 +61,8 @@ export const fetchHumidityDataAPI = async (start, end) => {
 	}
 }
 
-//------------CO2----------------
-export const fetchCO2DataAPI = async (start, end) => {
+//------------CO----------------
+export const fetchCODataAPI = async (start, end) => {
 	try {
 		const url = `https://api.thingspeak.com/channels/${CHANNEL_ID}/fields/3.json?timezone=${timezone}&results=288&start=${start}&end=${end}`
 		const response = await axios.get(url)
@@ -72,13 +72,13 @@ export const fetchCO2DataAPI = async (start, end) => {
 			throw new Error('Invalid response format')
 		}
 	} catch (error) {
-		console.error('Error fetching CO2:', error)
+		console.error('Error fetching CO:', error)
 		throw error
 	}
 }
 
-//------------CO----------------
-export const fetchCODataAPI = async (start, end) => {
+//------------CO2----------------
+export const fetchCO2DataAPI = async (start, end) => {
 	try {
 		const url = `https://api.thingspeak.com/channels/${CHANNEL_ID}/fields/4.json?timezone=${timezone}&results=288&start=${start}&end=${end}`
 		const response = await axios.get(url)
@@ -88,7 +88,7 @@ export const fetchCODataAPI = async (start, end) => {
 			throw new Error('Invalid response format')
 		}
 	} catch (error) {
-		console.error('Error fetching CO:', error)
+		console.error('Error fetching CO2:', error)
 		throw error
 	}
 }
