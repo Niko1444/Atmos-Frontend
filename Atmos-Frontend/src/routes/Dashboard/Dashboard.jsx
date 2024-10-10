@@ -1,4 +1,3 @@
-import React from 'react'
 import TempChart from '../../components/Charts/TempChart'
 import HumidityChart from '../../components/Charts/HumidityChart'
 import CO2Chart from '../../components/Charts/CO2Chart'
@@ -7,7 +6,6 @@ import UVChart from '../../components/Charts/UVChart'
 import PMChart from '../../components/Charts/PMChart'
 
 import { useMediaQuery } from 'react-responsive'
-import BreadDog from '../../assets/bread-dog.jpeg'
 
 function Dashboard() {
 	const isDesktopOrLaptop = useMediaQuery({
@@ -20,13 +18,8 @@ function Dashboard() {
 				{!isDesktopOrLaptop ? (
 					<>
 						<h1 className="text-center text-xl font-bold text-black">
-							You can only view the Dashboard on desktop for now hehehehe
+							You can only view the Dashboard on desktop for now
 						</h1>
-						<img
-							src={BreadDog}
-							alt="a dog in a bread lol"
-							className="h-[25rem] w-full object-cover"
-						/>
 					</>
 				) : (
 					<>

@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import PropTypes from 'prop-types'
+import { useState } from 'react'
 
 function SelectAlgorithmBtn({ onSelectAlgorithm }) {
 	const [isOpen, setIsOpen] = useState(false) // State to manage dropdown visibility
@@ -36,6 +37,10 @@ function SelectAlgorithmBtn({ onSelectAlgorithm }) {
 						</button>
 					</li>
 					<li>
+						<button onClick={() => handleSelectAlgorithm('LR')}>LR</button>
+					</li>
+
+					<li>
 						<button onClick={() => handleSelectAlgorithm('GB')}>GB</button>
 					</li>
 					<li>
@@ -58,3 +63,7 @@ function SelectAlgorithmBtn({ onSelectAlgorithm }) {
 }
 
 export default SelectAlgorithmBtn
+
+SelectAlgorithmBtn.propTypes = {
+	onSelectAlgorithm: PropTypes.func.isRequired,
+}

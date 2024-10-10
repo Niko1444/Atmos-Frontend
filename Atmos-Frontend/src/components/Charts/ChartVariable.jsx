@@ -12,7 +12,7 @@ export const datapointsPerLabel = 3
 
 export function generateChartDataLabels(
 	showLabelsOnChange = false,
-	decimalPlaces = 2,
+	decimalPlaces = 5,
 	range = 0.001,
 ) {
 	const DataLabels = {
@@ -34,7 +34,7 @@ export function generateChartDataLabels(
 		anchor: 'end',
 		align: 'center',
 		color: 'black',
-		formatter: function (value, context) {
+		formatter: function (value) {
 			return (
 				Math.round(value * Math.pow(10, decimalPlaces)) /
 				Math.pow(10, decimalPlaces)

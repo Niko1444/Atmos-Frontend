@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 const timezone = 'Asia%2FBangkok'
-const API_KEY = 'MP0MEWPWMADVCPMG'
-const CHANNEL_ID = 2465663
+const API_KEY = 'ZTXGJNPIUX2DRHVS'
+const CHANNEL_ID = 2146196
 
 // Define the URLs
 // export const urls = [

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import Menu from './Menu'
 import { useMediaQuery } from 'react-responsive'
 import TopNavigation from './TopNavigation'
@@ -27,3 +28,7 @@ function Layout({ children }) {
 }
 
 export default Layout
+
+Layout.propTypes = {
+	children: PropTypes.node.isRequired,
+}

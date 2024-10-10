@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { fetchSensorDataAPI } from '../../../api/api'
 import { getAQIAPI } from '../../../api/callAPIModels'
 import MeasuresModal from '../Navbar/MeasuresModal'
