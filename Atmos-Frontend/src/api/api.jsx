@@ -12,14 +12,15 @@ const CHANNEL_ID = 2146196
 // ]
 
 const url = `https://api.thingspeak.com/channels/2465663/feeds.json?api_key=MP0MEWPWMADVCPMG`
+const newUrl = 'https://atmos-latest.onrender.com/test'
 
 //------------All data----------------
-export const fetchSensorDataAPI = async (start, end) => {
+export const fetchSensorDataAPI = async () => {
 	try {
-		const url = `https://api.thingspeak.com/channels/${CHANNEL_ID}/feeds.json?api_key=${API_KEY}&start=${start}&end=${end}`
+		const url = `https://atmos-latest.onrender.com/test`
 		const response = await axios.get(url)
-		if (response.data && response.data.feeds) {
-			return response.data.feeds
+		if (response.data && response.data.data) {
+			return response.data.data
 		} else {
 			throw new Error('Invalid response format')
 		}

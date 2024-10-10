@@ -7,8 +7,6 @@ import { Transition } from '@headlessui/react'
 import './Scrollbar.css'
 import './Overlay.css'
 
-const fetchFromHour = 720
-
 const tips = {
 	temperature: {
 		tooHigh:
@@ -124,12 +122,12 @@ const colorRanges = {
 
 function Overlay() {
 	const [sensorData, setSensorData] = useState({
-		field1: 'Loading...', // Temperature
-		field2: 'Loading...', // Humidity
-		field3: 'Loading...', // CO
-		field4: 'Loading...', // CO2
-		field5: 'Loading...', // UV Index
-		field6: 'Loading...', // PM2.5
+		Temperature: 'Loading...', // Temperature
+		Humidity: 'Loading...', // Humidity
+		CO: 'Loading...', // CO
+		CO2: 'Loading...', // CO2
+		UV: 'Loading...', // UV Index
+		Dust: 'Loading...', // PM2.5
 		lastUpdate: '',
 	})
 
@@ -230,34 +228,30 @@ function Overlay() {
 
 	useEffect(() => {
 		const fetchLatestSensorData = async () => {
-			const hour = 60 * 60 * 1000
-			const end = new Date().toISOString()
-			const start = new Date(Date.now() - fetchFromHour * hour).toISOString()
-
 			try {
-				const feeds = await fetchSensorDataAPI(start, end)
-				if (feeds.length > 0) {
-					const latestData = feeds[feeds.length - 1]
+				const response = await fetchSensorDataAPI()
+				if (response.length > 0) {
+					const latestData = response[0]
 					setSensorData({
-						field1: parseFloat(latestData.field1).toFixed(1),
-						field2: parseFloat(latestData.field2).toFixed(0),
-						field3: parseFloat(latestData.field3).toFixed(4),
-						field4: parseFloat(latestData.field4).toFixed(4),
-						field5: parseFloat(latestData.field5).toFixed(0),
-						field6: parseFloat(latestData.field6).toFixed(4),
-						lastUpdate: new Date(latestData.created_at).toLocaleString(),
+						Temperature: parseFloat(latestData.Temperature).toFixed(1),
+						Humidity: parseFloat(latestData.Humidity).toFixed(0),
+						CO: parseFloat(latestData.CO).toFixed(2),
+						CO2: parseFloat(latestData.CO2).toFixed(2),
+						UV: parseFloat(latestData.UV).toFixed(2),
+						Dust: parseFloat(latestData.Dust).toFixed(2),
+						lastUpdate: latestData.createdTime,
 					})
 				}
 			} catch (error) {
 				console.error('Failed to fetch sensor data:', error)
 				setSensorData((prevState) => ({
 					...prevState,
-					field1: 'Error',
-					field2: 'Error',
-					field3: 'Error',
-					field4: 'Error',
-					field5: 'Error',
-					field6: 'Error',
+					Temperature: 'Error',
+					Humidity: 'Error',
+					CO: 'Error',
+					CO2: 'Error',
+					UV: 'Error',
+					Dust: 'Error',
 					lastUpdate: 'Error',
 				}))
 			}
@@ -310,20 +304,13 @@ function Overlay() {
 				style={{ height: '90vh' }}
 				onClick={toggleTableOverlay}
 			>
-				{/* Top Overlay */}
 				<div className="flex h-32 w-full flex-col items-center justify-center rounded-[3rem] bg-accent align-middle">
 					<h1 className="font-sans mx-10 text-center text-2xl font-medium text-primary">
 						Nearest Station From Your Location:
 					</h1>
-					{/* <h2 className="font-sans mx-10 my-1 text-center text-2xl font-light text-primary">
-						Thu Duc City
-					</h2> */}
 				</div>
-				{/* Bottom Overlay */}
 				<div className="flex w-full flex-grow flex-col rounded-[3rem] bg-neutral text-black">
-					{/* Current AQI and quick tips */}
 					<div className="relative flex h-32 w-full flex-grow flex-col items-center justify-around bg-neutral pt-4">
-						{/* LIVE Badge */}
 						<div className="absolute left-4 top-4 flex h-8 w-16 items-center justify-center rounded-lg bg-red-400">
 							<p className="text-primary">LIVE</p>
 						</div>
@@ -339,7 +326,6 @@ function Overlay() {
 							>
 								{currentCategoryAQI}
 							</p>
-							{/* Current Date and Time */}
 							<p className="pb-4 text-sm">{realtime} (last update)</p>
 						</div>
 						<div className="mx-4 h-28">
@@ -361,19 +347,18 @@ function Overlay() {
 							</Transition>
 						</div>
 					</div>
-					{/* Grid Layout of 6 Air Quality Indexes */}
 					<div className="m-0 grid grid-cols-2 gap-0 p-0">
 						<div
 							className="flex h-28 w-full flex-col items-center justify-center border-2 border-x-0 border-b-0"
 							style={{
 								backgroundColor: getColorForValue(
-									sensorData.field1,
+									sensorData.Temperature,
 									'temperature',
 								),
 							}}
 						>
 							<div className="text-2xl font-medium">
-								<div>{sensorData.field1 + '°C'}</div>
+								<div>{sensorData.Temperature + '°C'}</div>
 							</div>
 							<div className="text-">Temperature</div>
 						</div>
@@ -381,64 +366,63 @@ function Overlay() {
 							className="flex h-28 w-full flex-col items-center justify-center border-2 border-b-0 border-r-0"
 							style={{
 								backgroundColor: getColorForValue(
-									sensorData.field2,
+									sensorData.Humidity,
 									'humidity',
 								),
 							}}
 						>
 							<div className="text-2xl font-medium">
-								<div>{sensorData.field2 + '%'}</div>
+								<div>{sensorData.Humidity + '%'}</div>
 							</div>
 							<div>Humidity</div>
 						</div>
 						<div
-							className="flex h-28 w-full flex-col items-center justify-center border-2 border-b-0 border-r-0"
+							className="flex h-28 w-full flex-col items-center justify-center border-2 border-x-0 border-b-0"
 							style={{
-								backgroundColor: getColorForValue(sensorData.field3, 'co'),
+								backgroundColor: getColorForValue(sensorData.CO, 'co'),
 							}}
 						>
 							<div className="text-xl font-medium">
-								<div>{sensorData.field3 + 'ppm'}</div>
+								<div>{sensorData.CO + 'ppm'}</div>
 							</div>
 							<div>CO</div>
 						</div>
 						<div
-							className="flex h-28 w-full flex-col items-center justify-center border-2 border-x-0 border-b-0"
+							className="flex h-28 w-full flex-col items-center justify-center border-2 border-b-0 border-r-0"
 							style={{
-								backgroundColor: getColorForValue(sensorData.field4, 'co2'),
+								backgroundColor: getColorForValue(sensorData.CO2, 'co2'),
 							}}
 						>
 							<div className="text-xl font-medium">
-								<div>{sensorData.field4 + 'ppm'}</div>
+								<div>{sensorData.CO2 + 'ppm'}</div>
 							</div>
 							<div>CO2</div>
 						</div>
 						<div
 							className="flex h-28 w-full flex-col items-center justify-center rounded-bl-[3rem] border-2 border-x-0 border-b-0"
 							style={{
-								backgroundColor: getColorForValue(sensorData.field5, 'uvIndex'),
+								backgroundColor: getColorForValue(sensorData.UV, 'uvIndex'),
 							}}
 						>
 							<div className="text-2xl font-medium">
-								<div>{sensorData.field5}</div>
+								<div>{sensorData.UV}</div>
 							</div>
 							<div>UV Index</div>
 						</div>
 						<div
 							className="flex h-28 w-full flex-col items-center justify-center rounded-br-[3rem] border-2 border-b-0 border-r-0"
 							style={{
-								backgroundColor: getColorForValue(sensorData.field6, 'pm25'),
+								backgroundColor: getColorForValue(sensorData.Dust, 'pm25'),
 							}}
 						>
 							<div className="text-xl font-medium">
-								<div>{sensorData.field6 + 'ppm'}</div>
+								<div>{sensorData.Dust + 'ppm'}</div>
 							</div>
 							<div>PM2.5</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			{/* Table Overlay */}
 			{showTableOverlay && (
 				<div className="absolute right-[-2.4rem] top-0 z-10 flex h-[90vh] w-[40rem] flex-col overflow-hidden rounded-bl-[3rem] rounded-tl-[3rem] bg-primary shadow-xl xl:w-[60rem]">
 					<div className="modal-scrollbar ml-8 mr-[3rem] mt-8 overflow-y-auto">
