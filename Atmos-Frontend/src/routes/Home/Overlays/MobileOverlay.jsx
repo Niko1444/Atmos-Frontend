@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { fetchSensorDataAPI } from '../../../api/api'
 import { getAQIAPI } from '../../../api/callAPIModels'
 import { Transition } from '@headlessui/react'
+import { motion } from 'framer-motion'
 
 import './Scrollbar.css'
 import './Overlay.css'
@@ -131,6 +132,8 @@ function MobileOverlay() {
 	})
 
 	const [showOverlay, setShowOverlay] = useState(false)
+
+	const overlayRef = useRef(null)
 
 	const [currentCategoryAQI, setCurrentCategoryAQI] = useState('None')
 
@@ -288,20 +291,48 @@ function MobileOverlay() {
 		return range ? range.color : '#ffffff'
 	}
 
+	useEffect(() => {
+		const handleClickOutside = (event) => {
+			if (overlayRef.current && !overlayRef.current.contains(event.target)) {
+				setShowOverlay(false) // Hide overlay if clicked outside
+			}
+		}
+
+		if (showOverlay) {
+			document.addEventListener('mousedown', handleClickOutside)
+		} else {
+			document.removeEventListener('mousedown', handleClickOutside)
+		}
+
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside)
+		}
+	}, [showOverlay])
+
 	const toggleOverlay = () => {
 		setShowOverlay(!showOverlay)
 	}
 
 	return (
 		<>
-			<div
-				className="btn absolute bottom-[1.5rem] flex h-[3rem] w-9/12 items-center justify-center rounded-3xl bg-neutral align-middle text-xl text-black hover:bg-accent hover:text-white"
-				onClick={toggleOverlay}
-			>
-				Air Status
-			</div>
+			{!showOverlay && (
+				<div
+					className="btn absolute bottom-[1.5rem] flex h-[3rem] w-9/12 items-center justify-center rounded-3xl bg-neutral align-middle text-xl text-black hover:bg-accent hover:text-white"
+					onClick={toggleOverlay}
+				>
+					Air Status
+				</div>
+			)}
+
 			{showOverlay && (
-				<div className="absolute top-[13vh] flex scale-[80%] justify-center align-middle">
+				<motion.div
+					initial={{ opacity: 0, scale: 0.9 }}
+					animate={{ opacity: 1, scale: 1 }}
+					exit={{ opacity: 0, scale: 0.9 }}
+					transition={{ duration: 0.3 }}
+					className="absolute top-[5%] flex scale-[80%] justify-center align-middle"
+					ref={overlayRef}
+				>
 					<div
 						className="absolute z-20 flex w-[20rem] cursor-pointer flex-col rounded-[3rem] bg-accent shadow-xl"
 						style={{ height: '90vh' }}
@@ -435,7 +466,7 @@ function MobileOverlay() {
 							</div>
 						</div>
 					</div>
-				</div>
+				</motion.div>
 			)}
 		</>
 	)
