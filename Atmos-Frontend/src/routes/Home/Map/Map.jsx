@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import {
 	MapContainer,
 	TileLayer,
@@ -18,16 +18,19 @@ import './Map.css'
 
 function Map() {
 	// Lab Position
-	// const firtsPosition = [10.86748937028891, 106.79438149449618]
+	// const firstPosition = [10.86748937028891, 106.79438149449618]
 
 	// SPKT Position
-	// const firtsPosition = [10.850363, 106.771915]
+	// const firstPosition = [10.850363, 106.771915]
 
 	// IU Position
-	// const firtsPosition = [10.877707, 106.802017]
+	// const firstPosition = [10.877707, 106.802017]
 
 	// Phan Thiet Position
-	const firtsPosition = [10.92742, 108.10197]
+	// const firstPosition = [10.92742, 108.10197]
+
+	// Conference Position
+	const firstPosition = [10.75527, 106.69043]
 
 	const customIconMarker = new L.Icon({
 		iconUrl: CustomMarker,
@@ -44,7 +47,7 @@ function Map() {
 	const stationMarkers = [
 		{
 			key: 'marker1',
-			position: [10.92742, 108.10197],
+			position: firstPosition,
 			children: 'Station 1 - Thu Duc City',
 		},
 	]
@@ -101,7 +104,7 @@ function Map() {
 
 	return (
 		<div className="content-map relative">
-			<MapContainer center={firtsPosition} zoom={15} scrollWheelZoom={true}>
+			<MapContainer center={firstPosition} zoom={15} scrollWheelZoom={true}>
 				<TileLayer
 					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 					url="https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png?api_key=240d8d32-bc04-4def-be5a-5a230811e9de"
