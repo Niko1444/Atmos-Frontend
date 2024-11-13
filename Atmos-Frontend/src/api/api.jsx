@@ -1,7 +1,6 @@
 import axios from 'axios'
 
 const timezone = 'Asia%2FBangkok'
-const API_KEY = 'ZTXGJNPIUX2DRHVS'
 const CHANNEL_ID = 2146196
 
 // Define the URLs
@@ -11,8 +10,9 @@ const CHANNEL_ID = 2146196
 // 	`https://api.thingspeak.com/channels/${CHANNEL_ID}/feeds.json?api_key=${API_KEY}`,
 // ]
 
-const url = `https://api.thingspeak.com/channels/2465663/feeds.json?api_key=MP0MEWPWMADVCPMG`
-const newUrl = 'https://atmos-latest.onrender.com/test'
+// const API_KEY = 'ZTXGJNPIUX2DRHVS'
+// const url = `https://api.thingspeak.com/channels/2465663/feeds.json?api_key=MP0MEWPWMADVCPMG`
+// const newUrl = 'https://atmos-latest.onrender.com/test'
 
 //------------All data----------------
 export const fetchSensorDataAPI = async () => {

@@ -69,7 +69,7 @@ const colorRanges = {
 	],
 	co2: [
 		// units in ppm
-		{ max: 100000, color: '#98d6a6' },
+		{ max: 10000, color: '#98d6a6' },
 		{ max: 15000, color: '#b9d188' },
 		{ max: 30000, color: '#dec96d' },
 		{ max: 40000, color: '#edb066' },
@@ -236,7 +236,7 @@ function Overlay() {
 						Temperature: parseFloat(latestData.Temperature).toFixed(1),
 						Humidity: parseFloat(latestData.Humidity).toFixed(0),
 						CO: parseFloat(latestData.CO).toFixed(2),
-						CO2: parseFloat(latestData.CO2).toFixed(2),
+						CO2: parseFloat(latestData.CO2).toFixed(0),
 						UV: parseFloat(latestData.UV).toFixed(2),
 						Dust: parseFloat(latestData.Dust).toFixed(2),
 						lastUpdate: latestData.createdTime,
