@@ -36,7 +36,7 @@ function COChart({ hours }) {
 			const start = new Date(Date.now() - hours * hour).toISOString()
 
 			const data = await fetchCODataAPI(start, end)
-			const filteredData = data.filter((feed) => parseFloat(feed.field3) !== 0)
+			const filteredData = data
 			setCOData(filteredData)
 			setLoading(false)
 		} catch (error) {
