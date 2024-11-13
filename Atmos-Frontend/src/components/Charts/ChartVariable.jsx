@@ -22,7 +22,7 @@ export function generateChartDataLabels(
 				return true
 			}
 			if (
-				context.dataIndex === 0 ||
+				context.dataIndex % 10 === 0 ||
 				Math.abs(
 					context.dataset.data[context.dataIndex] -
 						context.dataset.data[context.dataIndex - 1],

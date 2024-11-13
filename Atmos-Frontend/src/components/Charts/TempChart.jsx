@@ -1,4 +1,4 @@
-// Import necessary libraries
+import PropTypes from 'prop-types'
 import { useEffect, useRef, useState } from 'react'
 import Chart from 'chart.js/auto'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
@@ -158,7 +158,7 @@ function TempChart({ hours }) {
 								},
 							},
 						},
-						datalabels: generateChartDataLabels(true, 1, 0.1),
+						datalabels: generateChartDataLabels(true, 1, 1),
 					},
 				},
 			})
@@ -225,3 +225,7 @@ function TempChart({ hours }) {
 }
 
 export default TempChart
+
+TempChart.propTypes = {
+	hours: PropTypes.number.isRequired,
+}

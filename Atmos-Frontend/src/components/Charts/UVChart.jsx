@@ -1,4 +1,4 @@
-// Import necessary libraries
+import PropTypes from 'prop-types'
 import { useEffect, useRef, useState } from 'react'
 import Chart from 'chart.js/auto'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
@@ -163,7 +163,7 @@ function UVChart({ hours }) {
 								},
 							},
 						},
-						datalabels: generateChartDataLabels(true, 2, 0.2),
+						datalabels: generateChartDataLabels(true, 0, 1),
 					},
 				},
 			})
@@ -226,3 +226,8 @@ function UVChart({ hours }) {
 }
 
 export default UVChart
+
+// Typechecking With PropTypes
+UVChart.propTypes = {
+	hours: PropTypes.number,
+}

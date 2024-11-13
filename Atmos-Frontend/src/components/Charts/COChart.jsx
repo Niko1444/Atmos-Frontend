@@ -1,4 +1,4 @@
-// Import necessary libraries
+import PropTypes from 'prop-types'
 import { useEffect, useRef, useState } from 'react'
 import Chart from 'chart.js/auto'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
@@ -219,3 +219,8 @@ function COChart({ hours }) {
 }
 
 export default COChart
+
+// Props Validation
+COChart.propTypes = {
+	hours: PropTypes.number.isRequired,
+}

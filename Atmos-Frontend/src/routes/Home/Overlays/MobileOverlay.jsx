@@ -341,9 +341,9 @@ function MobileOverlay() {
 						<div className="flex h-28 w-full flex-col items-center justify-center rounded-[3rem] bg-accent align-middle">
 							<h1 className="font-sans mx-10 text-center text-xl font-medium text-primary">
 								Nearest Station From Your Location: <br />{' '}
-								<h1 className="font-sans mx-10 text-center text-xl font-medium text-primary underline">
+								{/* <h1 className="font-sans mx-10 text-center text-xl font-medium text-primary underline">
 									District 4
-								</h1>
+								</h1> */}
 							</h1>
 						</div>
 						{/* Bottom Overlay */}

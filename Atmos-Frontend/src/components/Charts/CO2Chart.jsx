@@ -1,4 +1,4 @@
-// Import necessary libraries
+import PropTypes from 'prop-types'
 import { useEffect, useRef, useState } from 'react'
 import Chart from 'chart.js/auto'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
@@ -160,7 +160,7 @@ function CO2Chart({ hours }) {
 								},
 							},
 						},
-						datalabels: generateChartDataLabels(true, 4, 0.001),
+						datalabels: generateChartDataLabels(true, 0, 8000),
 					},
 				},
 			})
@@ -223,3 +223,8 @@ function CO2Chart({ hours }) {
 }
 
 export default CO2Chart
+
+// Prop Types Validation
+CO2Chart.propTypes = {
+	hours: PropTypes.number.isRequired,
+}

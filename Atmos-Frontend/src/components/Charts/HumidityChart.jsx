@@ -1,4 +1,4 @@
-// Import necessary libraries
+import PropTypes from 'prop-types'
 import { useEffect, useRef, useState } from 'react'
 import Chart from 'chart.js/auto'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
@@ -160,7 +160,7 @@ function HumidityChart({ hours }) {
 								},
 							},
 						},
-						datalabels: generateChartDataLabels(true, 2),
+						datalabels: generateChartDataLabels(true, 2, 1),
 					},
 				},
 			})
@@ -223,3 +223,8 @@ function HumidityChart({ hours }) {
 }
 
 export default HumidityChart
+
+// Props Validation
+HumidityChart.propTypes = {
+	hours: PropTypes.number.isRequired,
+}

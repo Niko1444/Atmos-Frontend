@@ -24,13 +24,13 @@ function Map() {
 	// const firstPosition = [10.850363, 106.771915]
 
 	// IU Position
-	// const firstPosition = [10.877707, 106.802017]
+	const firstPosition = [10.877707, 106.802017]
 
 	// Phan Thiet Position
 	// const firstPosition = [10.92742, 108.10197]
 
-	// Conference Position
-	const firstPosition = [10.75527, 106.69043]
+	// D4 Conference Position
+	// const firstPosition = [10.75527, 106.69043]
 
 	const customIconMarker = new L.Icon({
 		iconUrl: CustomMarker,
