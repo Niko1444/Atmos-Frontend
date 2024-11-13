@@ -142,7 +142,7 @@ function PMChart({ hours }) {
 									}
 
 									if (context.parsed.y !== null) {
-										label += context.parsed.y + 'PM2.5'
+										label += context.parsed.y + 'ppm'
 									}
 
 									if (context.dataIndex < pmData.length) {

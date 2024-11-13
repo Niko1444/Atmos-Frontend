@@ -69,11 +69,11 @@ const colorRanges = {
 	],
 	co2: [
 		// units in ppm
-		{ max: 400, color: '#98d6a6' },
-		{ max: 1000, color: '#b9d188' },
-		{ max: 2000, color: '#dec96d' },
-		{ max: 5000, color: '#edb066' },
-		{ max: 10000, color: '#f8956b' },
+		{ max: 100000, color: '#98d6a6' },
+		{ max: 15000, color: '#b9d188' },
+		{ max: 30000, color: '#dec96d' },
+		{ max: 40000, color: '#edb066' },
+		{ max: 50000, color: '#f8956b' },
 		{ max: Infinity, color: '#f56773' },
 	],
 	co: [
@@ -94,7 +94,7 @@ const colorRanges = {
 		{ max: Infinity, color: '#f56773' },
 	],
 	pm25: [
-		// units in µg/m³
+		// units in ppm
 		{ max: 10, color: '#98d6a6' },
 		{ max: 20, color: '#b9d188' },
 		{ max: 25, color: '#dec96d' },
