@@ -24,7 +24,10 @@ function Map() {
 	// const firstPosition = [10.850363, 106.771915]
 
 	// IU Position
-	const firstPosition = [10.877707, 106.802017]
+	// const firstPosition = [10.877707, 106.802017]
+
+	// hội trường Trần Chí Đáo
+	const firstPosition = [10.868959403378673, 106.79617166319456]
 
 	// Phan Thiet Position
 	// const firstPosition = [10.92742, 108.10197]
